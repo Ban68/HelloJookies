@@ -69,7 +69,7 @@ export function ProductCard({ id, name, description, price, imageUrl, category }
                         <Button
                             variant="primary" // Changed to primary for better visibility
                             size="icon" // Changed to icon size
-                            className="rounded-full w-10 h-10 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+                            className="relative z-20 rounded-full w-10 h-10 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-auto"
                             title="Agregar al carrito"
                             onClick={handleAddToCart}
                         >
@@ -80,7 +80,7 @@ export function ProductCard({ id, name, description, price, imageUrl, category }
 
                 {/* Mobile Add Button (Always visible on touch, handled via CSS media query logic if needed, but for now simple hidden on md) */}
                 <button
-                    className="md:hidden absolute bottom-4 right-4 bg-jookies-turquoise text-jookies-chocolate w-10 h-10 rounded-full flex items-center justify-center shadow-md font-bold"
+                    className="md:hidden absolute bottom-4 right-4 bg-jookies-turquoise text-jookies-chocolate w-10 h-10 rounded-full flex items-center justify-center shadow-md font-bold z-20"
                     onClick={handleAddToCart}
                 >
                     <Plus className="w-6 h-6" />
