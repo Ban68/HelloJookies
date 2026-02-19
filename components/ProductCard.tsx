@@ -3,8 +3,11 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Plus } from "lucide-react";
+import { useCartStore } from "@/lib/store";
+import { toast } from "sonner"; // If we had sonner, but let's just open cart for now
 
 interface ProductCardProps {
+    id: string;
     name: string;
     description: string;
     price: number;
@@ -12,7 +15,21 @@ interface ProductCardProps {
     category?: string;
 }
 
-export function ProductCard({ name, description, price, imageUrl, category }: ProductCardProps) {
+export function ProductCard({ id, name, description, price, imageUrl, category }: ProductCardProps) {
+    const addItem = useCartStore((state) => state.addItem);
+    const toggleCart = useCartStore((state) => state.toggleCart);
+    const isCartOpen = useCartStore((state) => state.isOpen);
+
+    const handleAddToCart = () => {
+        addItem({
+            id,
+            name,
+            price,
+            image_url: imageUrl,
+        });
+        if (!isCartOpen) toggleCart();
+    };
+
     return (
         <div className="group relative flex flex-col items-center">
             {/* Card Container */}
@@ -55,6 +72,7 @@ export function ProductCard({ name, description, price, imageUrl, category }: Pr
                             size="icon" // Changed to icon size
                             className="rounded-full w-10 h-10 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
                             title="Agregar al carrito"
+                            onClick={handleAddToCart}
                         >
                             <Plus className="w-5 h-5" />
                         </Button>
@@ -62,7 +80,10 @@ export function ProductCard({ name, description, price, imageUrl, category }: Pr
                 </div>
 
                 {/* Mobile Add Button (Always visible on touch, handled via CSS media query logic if needed, but for now simple hidden on md) */}
-                <button className="md:hidden absolute bottom-4 right-4 bg-jookies-turquoise text-jookies-chocolate w-10 h-10 rounded-full flex items-center justify-center shadow-md font-bold">
+                <button
+                    className="md:hidden absolute bottom-4 right-4 bg-jookies-turquoise text-jookies-chocolate w-10 h-10 rounded-full flex items-center justify-center shadow-md font-bold"
+                    onClick={handleAddToCart}
+                >
                     <Plus className="w-6 h-6" />
                 </button>
             </div>
