@@ -9,7 +9,7 @@ const PRODUCTS = [
     name: "Kinder Bueno",
     description: "Nuestra estrella. Rellena de crema de avellanas y trozos de Kinder.",
     price: 14000,
-    imageUrl: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=800&auto=format&fit=crop", // Delicious chocolate cookie close-up
+    imageUrl: "/images/kinder-bueno.jpg",
     category: "unit",
   },
   {
@@ -17,7 +17,7 @@ const PRODUCTS = [
     name: "Red Velvet",
     description: "Clásica red velvet con relleno de queso crema suave.",
     price: 12000,
-    imageUrl: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?q=80&w=800&auto=format&fit=crop", // Red velvet cake/cookie vibe
+    imageUrl: "/images/red-velvet.jpg",
     category: "unit",
   },
   {
@@ -25,7 +25,7 @@ const PRODUCTS = [
     name: "Klim Brigadeiro",
     description: "Masa de vainilla rellena de brigadeiro de leche Klim.",
     price: 12000,
-    imageUrl: "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?q=80&w=800&auto=format&fit=crop", // Golden cookie (verified)
+    imageUrl: "/images/klim-brigadeiro.jpg",
     category: "unit",
   },
   {
@@ -33,7 +33,7 @@ const PRODUCTS = [
     name: "Plan Playa x4",
     description: "Caja mixta con 4 galletas a elección. Perfecta para compartir en el rodadero.",
     price: 45000,
-    imageUrl: "https://images.unsplash.com/photo-1621236378699-8597f840b454?q=80&w=800&auto=format&fit=crop", // Box of cookies (verified)
+    imageUrl: "/images/plan-playa-box.jpg",
     category: "box",
   },
 ];
