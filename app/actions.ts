@@ -7,9 +7,14 @@ import { createClient } from '@supabase/supabase-js';
 // However, creating order items *transactionally* or securely might need service role or just standard client.
 // Let's use standard env vars for now.
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!; // Or SERVICE_ROLE_KEY if defined
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+    console.warn("Supabase credentials missing in Server Actions. Order creation will fail.");
+}
+
+const supabase = createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseKey || 'placeholder');
 
 export interface OrderItemInput {
     product_id: string;
