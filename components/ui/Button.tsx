@@ -24,10 +24,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         const baseStyles = "inline-flex items-center justify-center rounded-full font-heading font-bold uppercase tracking-wide transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-jookies-chocolate focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95";
 
         const variants = {
-            primary: "bg-jookies-turquoise text-jookies-chocolate hover:bg-[#3BD1C0] shadow-[4px_4px_0px_0px_rgba(74,44,42,1)] hover:shadow-[2px_2px_0px_0px_rgba(74,44,42,1)] hover:translate-x-[2px] hover:translate-y-[2px]",
-            secondary: "bg-jookies-pink text-white hover:bg-[#FF55A7] shadow-[4px_4px_0px_0px_rgba(74,44,42,1)] hover:shadow-[2px_2px_0px_0px_rgba(74,44,42,1)] hover:translate-x-[2px] hover:translate-y-[2px]",
-            outline: "border-2 border-jookies-chocolate bg-transparent text-jookies-chocolate hover:bg-jookies-beige/50",
-            ghost: "hover:bg-jookies-chocolate/10 text-jookies-chocolate",
+            primary: "bg-jookies-primary text-white hover:bg-jookies-pink/90 shadow-[4px_4px_0px_0px_#2D3436] hover:shadow-[2px_2px_0px_0px_#2D3436] hover:translate-x-[2px] hover:translate-y-[2px]",
+            secondary: "bg-jookies-secondary text-jookies-text hover:bg-jookies-blue/90 shadow-[4px_4px_0px_0px_#2D3436] hover:shadow-[2px_2px_0px_0px_#2D3436] hover:translate-x-[2px] hover:translate-y-[2px]",
+            outline: "border-2 border-jookies-text bg-transparent text-jookies-text hover:bg-jookies-text/5",
+            ghost: "hover:bg-jookies-text/5 text-jookies-text",
         };
 
         const sizes = {

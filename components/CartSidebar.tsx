@@ -36,18 +36,18 @@ export function CartSidebar() {
                         animate={{ x: 0 }}
                         exit={{ x: "100%" }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className="fixed top-0 right-0 h-full w-full max-w-md bg-jookies-beige shadow-2xl z-[70] flex flex-col border-l-4 border-jookies-chocolate"
+                        className="fixed top-0 right-0 h-full w-full max-w-md bg-jookies-beige shadow-2xl z-[70] flex flex-col border-l-4 border-jookies-text"
                     >
                         {/* Header */}
-                        <div className="p-6 border-b border-jookies-chocolate/10 flex justify-between items-center bg-white/50">
+                        <div className="p-6 border-b border-jookies-text/10 flex justify-between items-center bg-white/50">
                             <div>
-                                <h2 className="font-heading text-2xl text-jookies-chocolate">Tu Pedido</h2>
-                                <p className="text-xs text-jookies-orange font-bold animate-pulse">
+                                <h2 className="font-heading text-2xl text-jookies-text">Tu Pedido</h2>
+                                <p className="text-xs text-jookies-primary font-bold animate-pulse">
                                     ⚡ Llega en ~35 min a tu puerta
                                 </p>
                             </div>
-                            <button onClick={toggleCart} className="p-2 hover:bg-jookies-chocolate/10 rounded-full transition-colors">
-                                <X className="w-6 h-6 text-jookies-chocolate" />
+                            <button onClick={toggleCart} className="p-2 hover:bg-jookies-text/10 rounded-full transition-colors">
+                                <X className="w-6 h-6 text-jookies-text" />
                             </button>
                         </div>
 
@@ -55,14 +55,14 @@ export function CartSidebar() {
                         <div className="flex-1 overflow-y-auto p-6 space-y-6">
                             {items.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-center space-y-4 opacity-50">
-                                    <ShoppingBag className="w-16 h-16 text-jookies-chocolate" />
-                                    <p className="font-heading text-lg text-jookies-chocolate">Tu bolsa está vacía :(</p>
+                                    <ShoppingBag className="w-16 h-16 text-jookies-text" />
+                                    <p className="font-heading text-lg text-jookies-text">Tu bolsa está vacía :(</p>
                                     <p className="font-body text-sm">¡Agrega unas Jookies para ser feliz!</p>
                                 </div>
                             ) : (
                                 items.map((item) => (
-                                    <div key={item.id} className="flex gap-4 items-center bg-white p-3 rounded-2xl shadow-sm">
-                                        <div className="relative w-20 h-20 bg-gray-100 rounded-xl overflow-hidden flex-shrink-0">
+                                    <div key={item.id} className="flex gap-4 items-center bg-white p-3 rounded-2xl shadow-sm border border-jookies-text/5">
+                                        <div className="relative w-20 h-20 bg-gray-50 rounded-xl overflow-hidden flex-shrink-0">
                                             <Image
                                                 src={item.image_url}
                                                 alt={item.name}
@@ -71,23 +71,23 @@ export function CartSidebar() {
                                             />
                                         </div>
                                         <div className="flex-1">
-                                            <h3 className="font-heading text-lg text-jookies-chocolate leading-tight">{item.name}</h3>
-                                            <p className="font-heading text-sm text-jookies-orange font-bold">
+                                            <h3 className="font-heading text-lg text-jookies-text leading-tight">{item.name}</h3>
+                                            <p className="font-heading text-sm text-jookies-primary font-bold">
                                                 ${(item.price * item.quantity).toLocaleString('es-CO')}
                                             </p>
                                         </div>
 
-                                        <div className="flex flex-col items-center gap-1 bg-jookies-beige rounded-lg p-1">
+                                        <div className="flex flex-col items-center gap-1 bg-jookies-beige rounded-lg p-1 border border-jookies-text/5">
                                             <button
                                                 onClick={() => increaseQuantity(item.id)}
-                                                className="p-1 hover:bg-white rounded-md transition-colors text-jookies-chocolate"
+                                                className="p-1 hover:bg-white rounded-md transition-colors text-jookies-text"
                                             >
                                                 <Plus className="w-4 h-4" />
                                             </button>
-                                            <span className="font-bold text-sm min-w-[20px] text-center">{item.quantity}</span>
+                                            <span className="font-bold text-sm min-w-[20px] text-center text-jookies-text">{item.quantity}</span>
                                             <button
                                                 onClick={() => decreaseQuantity(item.id)}
-                                                className="p-1 hover:bg-white rounded-md transition-colors text-jookies-chocolate"
+                                                className="p-1 hover:bg-white rounded-md transition-colors text-jookies-text"
                                             >
                                                 <Minus className="w-4 h-4" />
                                             </button>
@@ -99,17 +99,17 @@ export function CartSidebar() {
 
                         {/* Footer / Checkout */}
                         {items.length > 0 && (
-                            <div className="p-6 bg-white border-t border-jookies-chocolate/10 space-y-4">
-                                <div className="flex justify-between items-center text-xl font-heading font-black text-jookies-chocolate">
+                            <div className="p-6 bg-white border-t border-jookies-text/10 space-y-4">
+                                <div className="flex justify-between items-center text-xl font-heading font-black text-jookies-text">
                                     <span>Total</span>
                                     <span>${total().toLocaleString('es-CO')}</span>
                                 </div>
 
                                 {/* Checkout Form */}
                                 <div className="space-y-3">
-                                    <input placeholder="Nombre" id="name" className="w-full border p-2 rounded-md border-jookies-chocolate/20 font-body" />
-                                    <input placeholder="Dirección" id="address" className="w-full border p-2 rounded-md border-jookies-chocolate/20 font-body" />
-                                    <input placeholder="Teléfono" id="phone" className="w-full border p-2 rounded-md border-jookies-chocolate/20 font-body" />
+                                    <input placeholder="Nombre" id="name" className="w-full border p-2 rounded-md border-jookies-text/20 font-body outline-none focus:border-jookies-primary" />
+                                    <input placeholder="Dirección" id="address" className="w-full border p-2 rounded-md border-jookies-text/20 font-body outline-none focus:border-jookies-primary" />
+                                    <input placeholder="Teléfono" id="phone" className="w-full border p-2 rounded-md border-jookies-text/20 font-body outline-none focus:border-jookies-primary" />
 
                                     <Button
                                         className="w-full text-lg h-14"

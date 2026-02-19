@@ -11,12 +11,14 @@ module.exports = {
                 background: "var(--background)",
                 foreground: "var(--foreground)",
                 jookies: {
-                    beige: '#F5E6D3', // Warm cookie dough base
-                    chocolate: '#4A2C2A', // Dark chocolate text/accents
-                    gold: '#D4AF37', // Premium highlights
-                    turquoise: '#40E0D0', // Tropical pop (CTA)
-                    pink: '#FF69B4', // Fun pop (CTA)
-                    orange: '#FF8C00', // Urgency/Warmth
+                    beige: '#FFFDF5', // Lighter cream base
+                    text: '#2D3436', // Dark grey for better contrast with pastels
+                    pink: '#FF80AB', // J & Bakery
+                    blue: '#4FC3F7', // O, S
+                    yellow: '#FFF176', // K
+                    green: '#4DB6AC', // I, E
+                    primary: '#FF80AB', // Main brand color
+                    secondary: '#4FC3F7',
                 },
             },
             fontFamily: {
