@@ -21,7 +21,7 @@ export function Navbar() {
                     {/* Logo */}
                     <div className="flex-shrink-0 flex items-center">
                         <Link href="/" className="hover:opacity-80 transition-opacity">
-                            <Logo className="w-32 md:w-40" />
+                            <Logo className="w-48 md:w-64 h-20" />
                         </Link>
                     </div>
 
