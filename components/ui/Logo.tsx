@@ -17,7 +17,7 @@ export function Logo({ className, variant = 'default' }: LogoProps) {
             */}
             <div className="relative w-full h-full min-w-[120px] min-h-[40px]">
                 <Image
-                    src="/images/logo.png"
+                    src="/images/logo.jpeg"
                     alt="Jookies Bakery"
                     fill
                     className="object-contain"
