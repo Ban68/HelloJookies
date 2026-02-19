@@ -12,7 +12,7 @@ export default function StorySection() {
                     <div className="order-2 md:order-1 relative">
                         <div className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
                             <div className="absolute inset-0 bg-gray-200 animate-pulse" /> {/* Placeholder for image */}
-                            {/* <Image src="/images/baker.jpg" alt="Baking with love" fill className="object-cover" /> */}
+                            <Image src="/images/our-story.jpg" alt="Baking with love" fill className="object-cover" />
                             <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg">
                                 <p className="font-heading text-lg text-jookies-chocolate">"No vendemos galletas, entregamos felicidad."</p>
                                 <p className="text-sm text-jookies-chocolate/60 mt-2">- El Equipo Jookies</p>

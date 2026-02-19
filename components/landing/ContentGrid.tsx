@@ -44,11 +44,13 @@ export default function ContentGrid() {
                     {ARTICLES.map((article) => (
                         <article key={article.id} className="group cursor-pointer flex flex-col h-full bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                             <div className={`relative h-64 overflow-hidden ${article.color}`}>
-                                {/* Placeholder for real image */}
-                                <div className="absolute inset-0 flex items-center justify-center text-jookies-chocolate/20 font-heading text-4xl font-bold opacity-30">
-                                    JOOKIES
-                                </div>
-                                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-jookies-chocolate uppercase tracking-wide">
+                                <Image
+                                    src={article.image}
+                                    alt={article.title}
+                                    fill
+                                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                />
+                                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-jookies-chocolate uppercase tracking-wide z-10">
                                     {article.category}
                                 </div>
                             </div>
