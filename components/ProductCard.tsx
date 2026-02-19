@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Plus } from "lucide-react";
 import { useCartStore } from "@/lib/store";
-import { toast } from "sonner"; // If we had sonner, but let's just open cart for now
 
 interface ProductCardProps {
     id: string;
