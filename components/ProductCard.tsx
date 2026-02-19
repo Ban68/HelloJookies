@@ -26,7 +26,6 @@ export function ProductCard({ id, name, description, price, imageUrl, category }
             price,
             image_url: imageUrl,
         });
-        if (!isCartOpen) toggleCart();
     };
 
     return (
