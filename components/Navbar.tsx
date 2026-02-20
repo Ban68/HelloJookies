@@ -7,6 +7,9 @@ import { useState } from "react";
 import { Logo } from "@/components/ui/Logo";
 import { useCartStore } from "@/lib/store"; // Import store to show actual count
 
+import { Logo } from "@/components/ui/Logo";
+import { useCartStore } from "@/lib/store";
+
 export function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const cartItems = useCartStore((state) => state.items);
