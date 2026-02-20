@@ -20,7 +20,7 @@ export function Logo({ className, variant = 'default' }: LogoProps) {
                     src="/images/logo.jpeg"
                     alt="Jookies Bakery"
                     fill
-                    className="object-contain scale-150"
+                    className="object-contain scale-150 mix-blend-multiply"
                     priority
                 />
             </div>
