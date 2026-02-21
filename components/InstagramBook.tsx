@@ -108,11 +108,13 @@ export function InstagramBook() {
                                 <PageContent
                                     pageIndex={currentPage}
                                     posts={posts}
+                                    onOpen={goNext}
                                 />
                             ) : (
                                 <PageContent
                                     pageIndex={currentPage - 1}
                                     posts={posts}
+                                    onOpen={goNext}
                                 />
                             )}
                         </div>
@@ -123,6 +125,7 @@ export function InstagramBook() {
                         <PageContent
                             pageIndex={isFlipping && flipDirection === "next" ? currentPage + 1 : isFlipping && flipDirection === "prev" ? currentPage - 1 : currentPage}
                             posts={posts}
+                            onOpen={goNext}
                         />
                     </div>
                 </div>
@@ -156,8 +159,8 @@ export function InstagramBook() {
                         <div
                             key={i}
                             className={`rounded-full transition-all duration-300 ${i === currentPage
-                                    ? "w-6 h-2 bg-jookies-primary"
-                                    : "w-2 h-2 bg-jookies-text/15"
+                                ? "w-6 h-2 bg-jookies-primary"
+                                : "w-2 h-2 bg-jookies-text/15"
                                 }`}
                         />
                     ))}
@@ -198,9 +201,9 @@ export function InstagramBook() {
 /* ============================================================
    Page Content renderer — determines what to show per page index
    ============================================================ */
-function PageContent({ pageIndex, posts: postList }: { pageIndex: number; posts: typeof posts }) {
+function PageContent({ pageIndex, posts: postList, onOpen }: { pageIndex: number; posts: typeof posts; onOpen?: () => void }) {
     // Cover
-    if (pageIndex <= 0) return <CoverPage />;
+    if (pageIndex <= 0) return <CoverPage onOpen={onOpen} />;
     // Back cover
     if (pageIndex >= postList.length + 1) return <BackCoverPage />;
     // Post page
@@ -210,28 +213,28 @@ function PageContent({ pageIndex, posts: postList }: { pageIndex: number; posts:
 /* ============================================================
    Cover Page
    ============================================================ */
-function CoverPage() {
+function CoverPage({ onOpen }: { onOpen?: () => void }) {
     return (
-        <div className="aspect-[3/4] w-full bg-gradient-to-br from-jookies-primary via-pink-400 to-orange-300 flex flex-col items-center justify-center p-10 relative overflow-hidden">
+        <div
+            className="aspect-[3/4] w-full bg-gradient-to-br from-jookies-primary via-pink-400 to-orange-300 flex flex-col items-center justify-center p-10 relative overflow-hidden cursor-pointer hover:brightness-105 transition-all"
+            onClick={onOpen}
+        >
             {/* Pattern overlay */}
-            <div className="absolute inset-0 opacity-10" style={{
+            <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
             }} />
 
-            {/* Logo */}
+            {/* Logo — full, no cropping */}
             <div className="relative w-48 h-48 mb-6 rounded-full bg-white/90 shadow-xl backdrop-blur-sm overflow-hidden flex-shrink-0">
                 <Image
                     src="/images/logo.jpeg"
                     alt="Jookies Bakery"
                     fill
-                    className="object-contain scale-[2] mix-blend-multiply p-2"
+                    className="object-contain mix-blend-multiply"
                     unoptimized
                 />
             </div>
 
-            <h2 className="font-heading text-3xl md:text-4xl font-black text-white text-center drop-shadow-lg mb-2">
-                Nuestro Álbum
-            </h2>
             <p className="text-white/80 text-center text-sm font-medium mb-6">
                 Cookies & más Cookies 🤎🍪
             </p>
