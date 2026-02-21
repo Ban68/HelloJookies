@@ -15,7 +15,7 @@ export function Logo({ className, variant = 'default' }: LogoProps) {
               Rename it to 'logo.png' (for the main specific logo) or update the src here.
               For now, the structure is ready for the image once uploaded.
             */}
-            <div className="relative w-full h-full min-w-[200px] min-h-[70px] md:min-w-[300px] md:min-h-[100px]">
+            <div className="relative w-full h-full">
                 <Image
                     src="/images/logo.jpeg"
                     alt="Jookies Bakery"

@@ -31,7 +31,7 @@ export default function RootLayout({
       <body className={`${fraunces.variable} ${inter.variable} antialiased bg-jookies-beige text-jookies-chocolate`}>
         <Navbar />
         <CartSidebar />
-        <main className="pt-20 min-h-screen">
+        <main className="pt-32 min-h-screen">
           {children}
         </main>
       </body>
