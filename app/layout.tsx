@@ -3,6 +3,7 @@ import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { CartSidebar } from "@/components/CartSidebar";
+import { QuickOrderModal } from "@/components/QuickOrderModal";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
       <body className={`${fraunces.variable} ${inter.variable} antialiased bg-jookies-beige text-jookies-chocolate`}>
         <Navbar />
         <CartSidebar />
+        <QuickOrderModal />
         <main className="pt-40 min-h-screen">
           {children}
         </main>

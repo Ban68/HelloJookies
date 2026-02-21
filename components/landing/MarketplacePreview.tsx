@@ -1,5 +1,6 @@
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/Button";
+import Link from "next/link";
 
 // Mock Data (Same as original page for now, but imported or passed as props ideally)
 const PREVIEW_PRODUCTS = [
@@ -46,9 +47,11 @@ export default function MarketplacePreview() {
                         </p>
                     </div>
                     <div className="hidden md:block">
-                        <Button variant="outline" className="border-jookies-chocolate text-jookies-chocolate hover:bg-jookies-chocolate hover:text-white transition-colors">
-                            Ver Menú Completo →
-                        </Button>
+                        <Link href="/menu">
+                            <Button variant="outline" className="border-jookies-chocolate text-jookies-chocolate hover:bg-jookies-chocolate hover:text-white transition-colors">
+                                Ver Menú Completo →
+                            </Button>
+                        </Link>
                     </div>
                 </div>
 
@@ -61,9 +64,11 @@ export default function MarketplacePreview() {
                 </div>
 
                 <div className="mt-12 text-center md:hidden">
-                    <Button className="w-full bg-jookies-chocolate text-white py-4 rounded-xl shadow-lg">
-                        Ver Menú Completo
-                    </Button>
+                    <Link href="/menu">
+                        <Button className="w-full bg-jookies-chocolate text-white py-4 rounded-xl shadow-lg">
+                            Ver Menú Completo
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </section>

@@ -1,6 +1,7 @@
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/Button";
 import Image from "next/image";
+import { HeroCTA } from "@/components/HeroCTA";
 
 // Mock Data (matches DB schema)
 const PRODUCTS = [
@@ -59,14 +60,7 @@ export default function Home() {
             Galletas chunky rellenas de felicidad. Pídelas ahora y llegamos en minutos a tu puerta.
           </p>
 
-          <div className="flex gap-4 justify-center animate-fade-in-up delay-300">
-            <Button size="lg" variant="primary" className="shadow-none hover:scale-105 transition-transform">
-              Pedir Ahora
-            </Button>
-            <Button size="lg" variant="outline">
-              Ver Menú
-            </Button>
-          </div>
+          <HeroCTA />
         </div>
 
         {/* Floating Cookie Image (Parallax Placeholder) */}

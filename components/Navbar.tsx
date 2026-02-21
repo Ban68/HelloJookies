@@ -5,7 +5,8 @@ import { ShoppingBag, Menu } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useState } from "react";
 import { Logo } from "@/components/ui/Logo";
-import { useCartStore } from "@/lib/store"; // Import store to show actual count
+import { useCartStore } from "@/lib/store";
+import { openQuickOrder } from "@/components/QuickOrderModal";
 
 export function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,7 +42,7 @@ export function Navbar() {
 
                     {/* Right: Actions */}
                     <div className="flex items-center justify-end space-x-4">
-                        <Button variant="primary" size="lg" className="hidden lg:inline-flex shadow-none border-2 border-transparent hover:border-jookies-text/10 uppercase tracking-widest font-heading font-bold px-8">
+                        <Button variant="primary" size="lg" className="hidden lg:inline-flex shadow-none border-2 border-transparent hover:border-jookies-text/10 uppercase tracking-widest font-heading font-bold px-8" onClick={openQuickOrder}>
                             Pedir Ya
                         </Button>
 
