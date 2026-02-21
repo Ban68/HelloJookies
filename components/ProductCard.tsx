@@ -1,9 +1,8 @@
 "use client";
-
-import Image from "next/image";
-import { Button } from "@/components/ui/Button";
-import { Plus } from "lucide-react";
-import { useCartStore } from "@/lib/store";
+import Image from 'next/image';
+import { Plus, Check } from 'lucide-react';
+import { useCartStore } from '@/lib/store';
+import { useState } from 'react';
 
 interface ProductCardProps {
     id: string;
@@ -11,79 +10,73 @@ interface ProductCardProps {
     description: string;
     price: number;
     imageUrl: string;
-    category?: string;
+    category: string;
 }
 
 export function ProductCard({ id, name, description, price, imageUrl, category }: ProductCardProps) {
     const addItem = useCartStore((state) => state.addItem);
     const toggleCart = useCartStore((state) => state.toggleCart);
-    const isCartOpen = useCartStore((state) => state.isOpen);
+    const [justAdded, setJustAdded] = useState(false);
 
-    const handleAddToCart = () => {
+    const handleAdd = () => {
         addItem({
             id,
             name,
             price,
             image_url: imageUrl,
         });
+        setJustAdded(true);
+        setTimeout(() => {
+            setJustAdded(false);
+            toggleCart();
+        }, 600);
     };
 
+    const categoryBg = category === 'box' ? 'bg-jookies-blue/10' : 'bg-jookies-yellow/10';
+
     return (
-        <div className="group relative flex flex-col items-center">
-            {/* Card Container */}
-            <div className="relative w-full aspect-[4/5] bg-white rounded-3xl overflow-hidden shadow-lg border-2 border-transparent hover:border-jookies-chocolate/10 transition-all duration-500">
+        <div className={`group relative flex flex-col rounded-3xl overflow-hidden transition-all duration-500 border border-transparent hover:border-jookies-text/5 hover:shadow-xl bg-white ${categoryBg}`}>
+            {/* Image */}
+            <div className="relative aspect-square overflow-hidden">
+                <Image
+                    src={imageUrl}
+                    alt={name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    unoptimized
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+            </div>
 
-                {/* Background Shape / Color Base (Optional, for visual pop) */}
-                <div className={`absolute inset-0 opacity-10 ${category === 'box' ? 'bg-jookies-turquoise' : 'bg-jookies-gold'} transition-opacity group-hover:opacity-20`} />
-
-                {/* Image */}
-                <div className="relative w-full h-3/5 p-6 flex items-center justify-center">
-                    <div className="relative w-full h-full transform transition-transform duration-500 group-hover:scale-110">
-                        {/* Placeholder for now if image fails, or use standard img tag for external urls if not configured in next.config */}
-                        <Image
-                            src={imageUrl}
-                            alt={name}
-                            fill
-                            className="object-contain drop-shadow-xl"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                    </div>
+            {/* Info */}
+            <div className="p-4 flex-1 flex flex-col justify-between">
+                <div>
+                    <h3 className="font-heading text-base font-bold text-jookies-text leading-tight mb-0.5">
+                        {name}
+                    </h3>
+                    <p className="text-[11px] text-jookies-text/40 line-clamp-1 mb-2">{description}</p>
                 </div>
 
-                {/* Content */}
-                <div className="absolute bottom-0 left-0 right-0 h-2/5 bg-white/90 backdrop-blur-sm p-6 flex flex-col justify-between transition-transform duration-300">
-                    <div>
-                        <h3 className="font-heading text-xl font-bold text-jookies-chocolate leading-tight mb-1">
-                            {name}
-                        </h3>
-                        <p className="font-body text-xs text-gray-500 line-clamp-2">
-                            {description}
-                        </p>
-                    </div>
+                <div className="flex items-center justify-between mt-2">
+                    <span className="font-heading text-lg font-bold text-jookies-primary">
+                        ${price.toLocaleString("es-CO")}
+                    </span>
 
-                    <div className="flex items-center justify-between mt-2">
-                        <span className="font-heading text-lg font-bold text-jookies-orange">
-                            ${price.toLocaleString('es-CO')}
-                        </span>
-                        <Button
-                            variant="primary" // Changed to primary for better visibility
-                            size="icon" // Changed to icon size
-                            className="relative z-20 rounded-full w-10 h-10 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-auto"
-                            title="Agregar al carrito"
-                            onClick={handleAddToCart}
-                        >
-                            <Plus className="w-5 h-5" />
-                        </Button>
-                    </div>
+                    <button
+                        onClick={handleAdd}
+                        className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 ${justAdded
+                            ? "bg-emerald-500 text-white scale-110"
+                            : "bg-jookies-beige text-jookies-text hover:bg-jookies-text hover:text-white"
+                            }`}
+                    >
+                        {justAdded ? (
+                            <Check className="w-4 h-4" />
+                        ) : (
+                            <Plus className="w-4 h-4" />
+                        )}
+                    </button>
                 </div>
-
-                {/* Mobile Add Button (Always visible on touch, handled via CSS media query logic if needed, but for now simple hidden on md) */}
-                <button
-                    className="md:hidden absolute bottom-4 right-4 bg-jookies-turquoise text-jookies-chocolate w-10 h-10 rounded-full flex items-center justify-center shadow-md font-bold z-20"
-                    onClick={handleAddToCart}
-                >
-                    <Plus className="w-6 h-6" />
-                </button>
             </div>
         </div>
     );

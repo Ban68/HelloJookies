@@ -3,15 +3,6 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
-// Note: keeping it simple without installing class-variance-authority if not needed, 
-// but since I'm defining variants, I'll write standard tailwind code directly or rudimentary cva if I don't want to install it.
-// Actually, I didn't install `class-variance-authority` in the previous step, so I will implement a simple version or install it.
-// I'll stick to a simple prop approach to avoid extra deps if possible, OR I can just install it.
-// The user asked for a "robust" stack. `class-variance-authority` is standard for Shadcn-like ui.
-// I'll assume standard props for now to keep it fast, or add CVA.
-// Let's stick to standard clsx logic for now to save a fetch, or just add it. 
-// I'll add `class-variance-authority` and `@radix-ui/react-slot` quickly to be professional.
-
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -21,13 +12,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ({ className, variant = 'primary', size = 'md', ...props }, ref) => {
-        const baseStyles = "inline-flex items-center justify-center rounded-full font-heading font-bold uppercase tracking-wide transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-jookies-chocolate focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95";
+        const baseStyles = "inline-flex items-center justify-center rounded-full font-heading font-bold uppercase tracking-wide transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-jookies-text focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95";
 
         const variants = {
-            primary: "bg-jookies-turquoise text-jookies-chocolate hover:bg-[#3BD1C0] shadow-[4px_4px_0px_0px_rgba(74,44,42,1)] hover:shadow-[2px_2px_0px_0px_rgba(74,44,42,1)] hover:translate-x-[2px] hover:translate-y-[2px]",
-            secondary: "bg-jookies-pink text-white hover:bg-[#FF55A7] shadow-[4px_4px_0px_0px_rgba(74,44,42,1)] hover:shadow-[2px_2px_0px_0px_rgba(74,44,42,1)] hover:translate-x-[2px] hover:translate-y-[2px]",
-            outline: "border-2 border-jookies-chocolate bg-transparent text-jookies-chocolate hover:bg-jookies-beige/50",
-            ghost: "hover:bg-jookies-chocolate/10 text-jookies-chocolate",
+            primary: "bg-jookies-primary text-white hover:bg-jookies-pink/90 shadow-[4px_4px_0px_0px_#2D3436] hover:shadow-[2px_2px_0px_0px_#2D3436] hover:translate-x-[2px] hover:translate-y-[2px]",
+            secondary: "bg-jookies-secondary text-jookies-text hover:bg-jookies-blue/90 shadow-[4px_4px_0px_0px_#2D3436] hover:shadow-[2px_2px_0px_0px_#2D3436] hover:translate-x-[2px] hover:translate-y-[2px]",
+            outline: "border-2 border-jookies-text bg-transparent text-jookies-text hover:bg-jookies-text/5",
+            ghost: "hover:bg-jookies-text/5 text-jookies-text",
         };
 
         const sizes = {

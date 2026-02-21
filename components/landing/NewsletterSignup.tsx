@@ -1,7 +1,7 @@
 
 export default function NewsletterSignup() {
     return (
-        <section className="py-20 bg-jookies-chocolate relative overflow-hidden text-white">
+        <section className="py-20 bg-jookies-text relative overflow-hidden text-white">
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px]" />
 
@@ -17,9 +17,9 @@ export default function NewsletterSignup() {
                     <input
                         type="email"
                         placeholder="Tu correo electrónico"
-                        className="flex-grow px-6 py-4 rounded-full text-jookies-chocolate focus:ring-2 focus:ring-jookies-orange outline-none"
+                        className="flex-grow px-6 py-4 rounded-full text-jookies-text focus:ring-2 focus:ring-jookies-primary outline-none"
                     />
-                    <button className="bg-jookies-orange text-white font-bold px-8 py-4 rounded-full hover:bg-opacity-90 transition-all shadow-lg hover:shadow-orange-500/50">
+                    <button className="bg-jookies-primary text-white font-bold px-8 py-4 rounded-full hover:bg-opacity-90 transition-all shadow-lg hover:shadow-pink-500/50">
                         Unirme al Club
                     </button>
                 </form>

@@ -1,5 +1,6 @@
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/Button";
+import Link from "next/link";
 
 // Mock Data (Same as original page for now, but imported or passed as props ideally)
 const PREVIEW_PRODUCTS = [
@@ -37,18 +38,20 @@ export default function MarketplacePreview() {
             <div className="max-w-7xl mx-auto px-6">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12">
                     <div className="max-w-xl">
-                        <span className="text-jookies-orange font-bold tracking-wider uppercase text-sm">El "Cookie Jar"</span>
-                        <h2 className="font-heading text-4xl md:text-5xl font-bold text-jookies-chocolate mt-2">
+                        <span className="text-jookies-primary font-bold tracking-wider uppercase text-sm">El &quot;Cookie Jar&quot;</span>
+                        <h2 className="font-heading text-4xl md:text-5xl font-bold text-jookies-text mt-2">
                             Favoritos de la Semana
                         </h2>
-                        <p className="text-jookies-chocolate/70 mt-4 text-lg">
+                        <p className="text-jookies-text/70 mt-4 text-lg">
                             Estas son las que todos se están llevando. Pide la tuya antes de que se acaben.
                         </p>
                     </div>
                     <div className="hidden md:block">
-                        <Button variant="outline" className="border-jookies-chocolate text-jookies-chocolate hover:bg-jookies-chocolate hover:text-white transition-colors">
-                            Ver Menú Completo →
-                        </Button>
+                        <Link href="/menu">
+                            <Button variant="outline" className="border-jookies-text text-jookies-text hover:bg-jookies-text hover:text-white transition-colors">
+                                Ver Menú Completo →
+                            </Button>
+                        </Link>
                     </div>
                 </div>
 
@@ -61,9 +64,11 @@ export default function MarketplacePreview() {
                 </div>
 
                 <div className="mt-12 text-center md:hidden">
-                    <Button className="w-full bg-jookies-chocolate text-white py-4 rounded-xl shadow-lg">
-                        Ver Menú Completo
-                    </Button>
+                    <Link href="/menu">
+                        <Button className="w-full bg-jookies-text text-white py-4 rounded-xl shadow-lg">
+                            Ver Menú Completo
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </section>

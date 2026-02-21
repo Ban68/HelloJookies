@@ -3,22 +3,23 @@ import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { CartSidebar } from "@/components/CartSidebar";
+import { QuickOrderModal } from "@/components/QuickOrderModal";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: '--font-fraunces',
-  display: 'swap',
+  variable: "--font-fraunces",
+  display: "swap",
 });
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: '--font-inter',
-  display: 'swap',
+  variable: "--font-inter",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Hello Jookies | El antojo de Santa Marta",
-  description: "Galletas rellenas, toppings abundantes y delivery rápido en Santa Marta.",
+  title: "Jookies Bakery — Galletas Artesanales",
+  description: "Las mejores galletas artesanales de Santa Marta y Barranquilla. Horneadas con amor cada día.",
 };
 
 export default function RootLayout({
@@ -28,12 +29,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={`${fraunces.variable} ${inter.variable} antialiased bg-jookies-beige text-jookies-chocolate`}>
+      <body
+        className={`${fraunces.variable} ${inter.variable} antialiased bg-jookies-beige text-jookies-text`}
+      >
         <Navbar />
-        <CartSidebar />
-        <main className="pt-20 min-h-screen">
+        <main className="pt-40">
           {children}
         </main>
+        <CartSidebar />
+        <QuickOrderModal />
       </body>
     </html>
   );

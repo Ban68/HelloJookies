@@ -74,9 +74,9 @@ export default function KitchenPage() {
     };
 
     return (
-        <div className={`min-h-screen p-8 transition-colors duration-500 ${lastOrderId ? 'bg-jookies-orange/10' : 'bg-gray-100'}`}>
+        <div className={`min-h-screen p-8 transition-colors duration-500 ${lastOrderId ? 'bg-jookies-primary/10' : 'bg-gray-100'}`}>
             <div className="flex justify-between items-center mb-8">
-                <h1 className="text-4xl font-heading font-black text-jookies-chocolate">
+                <h1 className="text-4xl font-heading font-black text-jookies-text">
                     KDS
                 </h1>
                 <div className="flex items-center gap-2">
@@ -98,9 +98,9 @@ function OrderCard({ order, onComplete, isNew }: { order: Order, onComplete: (id
     // Cronometer logic could go here (useEffect with set interval calculating diff from created_at)
 
     return (
-        <div className={`bg-white rounded-2xl shadow-lg p-6 border-l-8 ${isNew ? 'border-jookies-orange animate-bounce-short' : 'border-jookies-turquoise'}`}>
+        <div className={`bg-white rounded-2xl shadow-lg p-6 border-l-8 ${isNew ? 'border-jookies-primary animate-bounce-short' : 'border-jookies-secondary'}`}>
             <div className="flex justify-between items-start mb-4">
-                <h3 className="font-heading text-2xl font-bold text-jookies-chocolate">#{order.id.slice(0, 4)}</h3>
+                <h3 className="font-heading text-2xl font-bold text-jookies-text">#{order.id.slice(0, 4)}</h3>
                 <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-bold font-mono">
                     {new Date(order.created_at).toLocaleTimeString()}
                 </span>
