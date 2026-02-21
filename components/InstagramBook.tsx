@@ -21,7 +21,7 @@ const posts = [
     },
     {
         image: "/images/klim-brigadeiro.jpg",
-        caption: "🇧🇷 Brigadeiro meets Cookie. Klim + chocolate + leche condensada = una locura que no te puedes perder. #JookiesBakery",
+        caption: "🇧🇷 Brigadeiro meets Cookie. Klim + chocolate + leche condensada = una locura que no te puedes perder.",
         likes: 198,
         comments: 22,
         date: "Hace 1 semana",
@@ -42,178 +42,314 @@ const posts = [
     },
     {
         image: "/images/red-velvet.jpg",
-        caption: "🎂 ¿Cumpleaños? ¿Aniversario? ¿Un martes random? Cualquier excusa es buena para una caja de Jookies. Escríbenos 💌",
+        caption: "🎂 ¿Cumpleaños? ¿Aniversario? ¿Un martes random? Cualquier excusa es buena para una caja de Jookies. 💌",
         likes: 178,
         comments: 19,
         date: "Hace 2 semanas",
     },
 ];
 
+// Total pages = cover + posts + back cover
+const TOTAL_PAGES = posts.length + 2;
+
 export function InstagramBook() {
-    const [currentPage, setCurrentPage] = useState(0);
-    const totalPages = Math.ceil(posts.length / 2);
+    const [currentPage, setCurrentPage] = useState(0); // 0 = cover
+    const [isFlipping, setIsFlipping] = useState(false);
+    const [flipDirection, setFlipDirection] = useState<"next" | "prev">("next");
 
     const goNext = () => {
-        setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
+        if (currentPage >= TOTAL_PAGES - 1 || isFlipping) return;
+        setFlipDirection("next");
+        setIsFlipping(true);
+        setTimeout(() => {
+            setCurrentPage((p) => p + 1);
+            setIsFlipping(false);
+        }, 600);
     };
 
     const goPrev = () => {
-        setCurrentPage((prev) => Math.max(prev - 1, 0));
+        if (currentPage <= 0 || isFlipping) return;
+        setFlipDirection("prev");
+        setIsFlipping(true);
+        setTimeout(() => {
+            setCurrentPage((p) => p - 1);
+            setIsFlipping(false);
+        }, 600);
     };
 
-    const leftPost = posts[currentPage * 2];
-    const rightPost = posts[currentPage * 2 + 1];
+    const isCover = currentPage === 0;
+    const isBackCover = currentPage === TOTAL_PAGES - 1;
+    const postIndex = currentPage - 1; // -1 because page 0 is cover
 
     return (
-        <div className="relative w-full max-w-2xl mx-auto">
-            {/* Book Container */}
-            <div className="relative bg-white rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.15)] overflow-hidden border border-gray-100">
+        <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto select-none">
+            {/* Book */}
+            <div
+                className="relative w-full"
+                style={{ perspective: "1200px" }}
+            >
+                {/* Book body with shadow */}
+                <div className="relative rounded-xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.25)]">
 
-                {/* Book Header — Instagram-style */}
-                <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100 bg-gradient-to-r from-white to-gray-50/50">
-                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-jookies-primary relative flex-shrink-0">
-                        <Image
-                            src="/images/logo.jpeg"
-                            alt="Jookies"
-                            fill
-                            className="object-cover scale-[2] mix-blend-multiply"
-                            unoptimized
-                        />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                        <p className="font-bold text-sm text-jookies-text">jookiesbakery</p>
-                        <p className="text-xs text-jookies-text/50">Santa Marta & Barranquilla 🍪</p>
-                    </div>
-                    <a
-                        href="https://www.instagram.com/jookiesbakery/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white text-xs font-bold px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"
-                    >
-                        <Instagram className="w-3.5 h-3.5" />
-                        Seguir
-                    </a>
-                </div>
-
-                {/* Pages */}
-                <div className="grid grid-cols-1 md:grid-cols-2 divide-x divide-gray-100 min-h-[420px]">
-                    {/* Left Page */}
-                    {leftPost && (
-                        <PostCard post={leftPost} />
-                    )}
-
-                    {/* Right Page */}
-                    {rightPost ? (
-                        <PostCard post={rightPost} />
-                    ) : (
-                        <div className="flex flex-col items-center justify-center p-8 bg-gradient-to-br from-jookies-beige/30 to-white">
-                            <div className="w-20 h-20 rounded-full bg-jookies-primary/10 flex items-center justify-center mb-4">
-                                <Instagram className="w-10 h-10 text-jookies-primary" />
-                            </div>
-                            <p className="font-heading font-bold text-jookies-text text-center text-lg mb-1">¿Quieres ver más?</p>
-                            <p className="text-jookies-text/50 text-sm text-center mb-4">Síguenos en Instagram</p>
-                            <a
-                                href="https://www.instagram.com/jookiesbakery/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-jookies-primary font-bold text-sm hover:underline"
-                            >
-                                @jookiesbakery →
-                            </a>
+                    {/* === Flipping Page (animated overlay) === */}
+                    {isFlipping && (
+                        <div
+                            className="absolute inset-0 z-30 overflow-hidden"
+                            style={{
+                                transformOrigin: flipDirection === "next" ? "left center" : "right center",
+                                animation: flipDirection === "next"
+                                    ? "flipNext 0.6s ease-in-out forwards"
+                                    : "flipPrev 0.6s ease-in-out forwards",
+                                backfaceVisibility: "hidden",
+                            }}
+                        >
+                            {/* Show the page we're leaving */}
+                            {flipDirection === "next" ? (
+                                <PageContent
+                                    pageIndex={currentPage}
+                                    posts={posts}
+                                />
+                            ) : (
+                                <PageContent
+                                    pageIndex={currentPage - 1}
+                                    posts={posts}
+                                />
+                            )}
                         </div>
                     )}
+
+                    {/* === Current visible page === */}
+                    <div className={`transition-opacity duration-100 ${isFlipping ? "opacity-80" : "opacity-100"}`}>
+                        <PageContent
+                            pageIndex={isFlipping && flipDirection === "next" ? currentPage + 1 : isFlipping && flipDirection === "prev" ? currentPage - 1 : currentPage}
+                            posts={posts}
+                        />
+                    </div>
                 </div>
 
-                {/* Navigation Footer */}
-                <div className="flex items-center justify-between px-5 py-3 border-t border-gray-100 bg-gray-50/50">
-                    <button
-                        onClick={goPrev}
-                        disabled={currentPage === 0}
-                        className="flex items-center gap-1 text-sm font-medium text-jookies-text/70 hover:text-jookies-primary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                    >
-                        <ChevronLeft className="w-4 h-4" />
-                        Anterior
-                    </button>
+                {/* Book spine edge */}
+                <div className="absolute top-0 left-0 bottom-0 w-[6px] bg-gradient-to-r from-amber-900/30 via-amber-800/15 to-transparent rounded-l-xl z-20 pointer-events-none" />
+                <div className="absolute top-0 right-0 bottom-0 w-[3px] bg-gradient-to-l from-black/10 to-transparent rounded-r-xl z-20 pointer-events-none" />
 
-                    <div className="flex gap-1.5">
-                        {Array.from({ length: totalPages }).map((_, i) => (
-                            <button
-                                key={i}
-                                onClick={() => setCurrentPage(i)}
-                                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === currentPage
-                                        ? "bg-jookies-primary scale-125"
-                                        : "bg-gray-300 hover:bg-gray-400"
-                                    }`}
-                            />
+                {/* Page edge lines (visible pages effect) */}
+                {!isCover && (
+                    <div className="absolute top-1 left-0 bottom-1 w-[5px] z-10 pointer-events-none flex flex-col justify-center gap-px">
+                        {Array.from({ length: Math.min(currentPage, 5) }).map((_, i) => (
+                            <div key={i} className="h-full bg-gray-200 rounded-l-sm" style={{ marginLeft: `${i}px` }} />
                         ))}
                     </div>
-
-                    <button
-                        onClick={goNext}
-                        disabled={currentPage === totalPages - 1}
-                        className="flex items-center gap-1 text-sm font-medium text-jookies-text/70 hover:text-jookies-primary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                    >
-                        Siguiente
-                        <ChevronRight className="w-4 h-4" />
-                    </button>
-                </div>
+                )}
             </div>
 
-            {/* "Spine" shadow for Book effect */}
-            <div className="hidden md:block absolute top-4 bottom-4 left-1/2 -translate-x-1/2 w-[3px] bg-gradient-to-b from-transparent via-black/10 to-transparent rounded-full pointer-events-none z-10" />
+            {/* Page indicator & Navigation */}
+            <div className="flex items-center justify-between w-full px-2">
+                <button
+                    onClick={goPrev}
+                    disabled={currentPage === 0 || isFlipping}
+                    className="flex items-center gap-1 text-sm font-medium text-jookies-text/60 hover:text-jookies-primary disabled:opacity-20 disabled:cursor-not-allowed transition-colors p-2 rounded-full hover:bg-jookies-primary/10"
+                >
+                    <ChevronLeft className="w-5 h-5" />
+                </button>
+
+                <div className="flex items-center gap-1.5">
+                    {Array.from({ length: TOTAL_PAGES }).map((_, i) => (
+                        <div
+                            key={i}
+                            className={`rounded-full transition-all duration-300 ${i === currentPage
+                                    ? "w-6 h-2 bg-jookies-primary"
+                                    : "w-2 h-2 bg-jookies-text/15"
+                                }`}
+                        />
+                    ))}
+                </div>
+
+                <button
+                    onClick={goNext}
+                    disabled={currentPage === TOTAL_PAGES - 1 || isFlipping}
+                    className="flex items-center gap-1 text-sm font-medium text-jookies-text/60 hover:text-jookies-primary disabled:opacity-20 disabled:cursor-not-allowed transition-colors p-2 rounded-full hover:bg-jookies-primary/10"
+                >
+                    <ChevronRight className="w-5 h-5" />
+                </button>
+            </div>
+
+            {/* Inline CSS for flip animation */}
+            <style jsx>{`
+                @keyframes flipNext {
+                    0% {
+                        transform: rotateY(0deg);
+                    }
+                    100% {
+                        transform: rotateY(-180deg);
+                    }
+                }
+                @keyframes flipPrev {
+                    0% {
+                        transform: rotateY(0deg);
+                    }
+                    100% {
+                        transform: rotateY(180deg);
+                    }
+                }
+            `}</style>
         </div>
     );
 }
 
-function PostCard({ post }: { post: typeof posts[0] }) {
+/* ============================================================
+   Page Content renderer — determines what to show per page index
+   ============================================================ */
+function PageContent({ pageIndex, posts: postList }: { pageIndex: number; posts: typeof posts }) {
+    // Cover
+    if (pageIndex <= 0) return <CoverPage />;
+    // Back cover
+    if (pageIndex >= postList.length + 1) return <BackCoverPage />;
+    // Post page
+    return <PostPage post={postList[pageIndex - 1]} pageNum={pageIndex} total={postList.length} />;
+}
+
+/* ============================================================
+   Cover Page
+   ============================================================ */
+function CoverPage() {
+    return (
+        <div className="aspect-[3/4] w-full bg-gradient-to-br from-jookies-primary via-pink-400 to-orange-300 flex flex-col items-center justify-center p-10 relative overflow-hidden">
+            {/* Pattern overlay */}
+            <div className="absolute inset-0 opacity-10" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }} />
+
+            {/* Logo */}
+            <div className="relative w-48 h-48 mb-6 rounded-full bg-white/90 shadow-xl backdrop-blur-sm overflow-hidden flex-shrink-0">
+                <Image
+                    src="/images/logo.jpeg"
+                    alt="Jookies Bakery"
+                    fill
+                    className="object-contain scale-[2] mix-blend-multiply p-2"
+                    unoptimized
+                />
+            </div>
+
+            <h2 className="font-heading text-3xl md:text-4xl font-black text-white text-center drop-shadow-lg mb-2">
+                Nuestro Álbum
+            </h2>
+            <p className="text-white/80 text-center text-sm font-medium mb-6">
+                Cookies & más Cookies 🤎🍪
+            </p>
+
+            <div className="flex items-center gap-2 text-white/60 text-xs">
+                <Instagram className="w-4 h-4" />
+                <span>@jookiesbakery</span>
+            </div>
+
+            {/* Tap to open hint */}
+            <div className="absolute bottom-6 right-6 flex items-center gap-1.5 text-white/50 text-xs animate-pulse">
+                <span>Abrir</span>
+                <ChevronRight className="w-4 h-4" />
+            </div>
+        </div>
+    );
+}
+
+/* ============================================================
+   Post Page
+   ============================================================ */
+function PostPage({ post, pageNum, total }: { post: typeof posts[0]; pageNum: number; total: number }) {
     const [liked, setLiked] = useState(false);
 
     return (
-        <div className="flex flex-col">
+        <div className="aspect-[3/4] w-full bg-white flex flex-col relative">
+            {/* Page texture */}
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.03)_0px,transparent_4px)] pointer-events-none z-10" />
+
+            {/* Header */}
+            <div className="flex items-center gap-2.5 px-4 py-3 border-b border-gray-100">
+                <div className="w-8 h-8 rounded-full overflow-hidden border border-jookies-primary/30 relative flex-shrink-0">
+                    <Image
+                        src="/images/logo.jpeg"
+                        alt="Jookies"
+                        fill
+                        className="object-cover scale-[2] mix-blend-multiply"
+                        unoptimized
+                    />
+                </div>
+                <div className="flex-1 min-w-0">
+                    <p className="font-bold text-xs text-jookies-text">jookiesbakery</p>
+                    <p className="text-[10px] text-jookies-text/40">Santa Marta 🍪</p>
+                </div>
+                <span className="text-[10px] text-jookies-text/30 font-medium">{post.date}</span>
+            </div>
+
             {/* Image */}
-            <div className="relative aspect-square w-full overflow-hidden bg-gray-100 cursor-pointer group"
-                onDoubleClick={() => setLiked(true)}>
+            <div
+                className="relative flex-1 min-h-0 overflow-hidden cursor-pointer group"
+                onDoubleClick={() => setLiked(true)}
+            >
                 <Image
                     src={post.image}
                     alt={post.caption}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
                     unoptimized
                 />
-                {/* Double-tap heart animation */}
                 {liked && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <Heart className="w-20 h-20 text-white fill-white drop-shadow-lg animate-ping" />
+                        <Heart className="w-16 h-16 text-white fill-white drop-shadow-lg animate-ping" />
                     </div>
                 )}
             </div>
 
             {/* Engagement */}
-            <div className="p-4 flex-1 flex flex-col">
-                <div className="flex items-center gap-4 mb-2">
-                    <button
-                        onClick={() => setLiked(!liked)}
-                        className="hover:scale-110 transition-transform"
-                    >
-                        <Heart
-                            className={`w-6 h-6 transition-colors ${liked ? "text-red-500 fill-red-500" : "text-jookies-text/70"
-                                }`}
-                        />
+            <div className="px-4 py-3 space-y-1.5">
+                <div className="flex items-center gap-3">
+                    <button onClick={() => setLiked(!liked)} className="hover:scale-110 transition-transform">
+                        <Heart className={`w-5 h-5 transition-colors ${liked ? "text-red-500 fill-red-500" : "text-jookies-text/60"}`} />
                     </button>
-                    <MessageCircle className="w-6 h-6 text-jookies-text/70" />
+                    <MessageCircle className="w-5 h-5 text-jookies-text/60" />
                 </div>
-
-                <p className="font-bold text-sm text-jookies-text mb-1">
+                <p className="font-bold text-xs text-jookies-text">
                     {liked ? (post.likes + 1).toLocaleString() : post.likes.toLocaleString()} Me gusta
                 </p>
-
-                <p className="text-sm text-jookies-text/80 leading-relaxed flex-1">
-                    <span className="font-bold">jookiesbakery</span>{" "}
+                <p className="text-xs text-jookies-text/70 leading-relaxed line-clamp-3">
+                    <span className="font-bold">jookiesbakery </span>
                     {post.caption}
                 </p>
-
-                <p className="text-xs text-jookies-text/40 mt-2">{post.date}</p>
             </div>
+
+            {/* Page number */}
+            <div className="absolute bottom-2 right-3 text-[9px] text-jookies-text/20 font-medium">
+                {pageNum} / {total}
+            </div>
+        </div>
+    );
+}
+
+/* ============================================================
+   Back Cover
+   ============================================================ */
+function BackCoverPage() {
+    return (
+        <div className="aspect-[3/4] w-full bg-gradient-to-br from-jookies-text via-gray-800 to-gray-900 flex flex-col items-center justify-center p-10 relative overflow-hidden">
+            <div className="absolute inset-0 opacity-5" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }} />
+
+            <Instagram className="w-12 h-12 text-white/80 mb-4" />
+            <h3 className="font-heading text-2xl font-black text-white text-center mb-2">
+                ¿Quieres ver más?
+            </h3>
+            <p className="text-white/50 text-sm text-center mb-6">
+                Síguenos para nuevos sabores, promos y más 🍪
+            </p>
+            <a
+                href="https://www.instagram.com/jookiesbakery/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white font-bold text-sm px-6 py-3 rounded-full hover:scale-105 transition-transform shadow-lg"
+            >
+                <Instagram className="w-4 h-4" />
+                @jookiesbakery
+            </a>
+            <p className="text-white/20 text-xs mt-8">3,888 seguidores • 107 publicaciones</p>
         </div>
     );
 }
