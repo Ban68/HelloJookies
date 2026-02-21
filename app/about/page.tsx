@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { Heart, Star, Zap, Coffee, MapPin } from "lucide-react";
+import { InstagramBook } from "@/components/InstagramBook";
 
 export default function AboutPage() {
     return (
@@ -24,19 +25,8 @@ export default function AboutPage() {
             <section className="py-24 bg-white">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-                        <div className="relative group">
-                            <div className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl transform transition-transform duration-700 group-hover:scale-[1.02]">
-                                <Image
-                                    src="/images/logo.jpeg"
-                                    alt="Jookies Bakery Story"
-                                    fill
-                                    className="object-contain p-12 mix-blend-multiply brightness-[1.02] contrast-[1.05]"
-                                />
-                                <div className="absolute inset-0 bg-jookies-primary/5 group-hover:bg-transparent transition-colors" />
-                            </div>
-                            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-jookies-secondary rounded-full flex items-center justify-center -rotate-12 shadow-xl z-20">
-                                <span className="text-jookies-text font-heading font-black text-3xl">100% Real</span>
-                            </div>
+                        <div className="relative">
+                            <InstagramBook />
                         </div>
 
                         <div className="space-y-8">
