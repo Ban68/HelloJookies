@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function StorySection() {
     return (
@@ -48,10 +49,10 @@ export default function StorySection() {
                         </div>
 
                         <div className="pt-4">
-                            <button className="text-jookies-orange font-bold text-lg hover:underline decoration-2 underline-offset-4 group flex items-center gap-2">
+                            <Link href="/about" className="text-jookies-orange font-bold text-lg hover:underline decoration-2 underline-offset-4 group flex items-center gap-2">
                                 Lee nuestra historia completa
                                 <span className="group-hover:translate-x-1 transition-transform">→</span>
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
