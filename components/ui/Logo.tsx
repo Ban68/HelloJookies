@@ -3,22 +3,24 @@ import { cn } from '@/lib/utils';
 
 interface LogoProps {
     className?: string;
-    variant?: 'default' | 'icon';
 }
 
-export function Logo({ className, variant = 'default' }: LogoProps) {
+export function Logo({ className }: LogoProps) {
     return (
-        <div className={cn("relative flex items-center justify-center", className)}>
-            <div className="relative w-full h-full overflow-hidden flex items-center justify-center rounded-lg">
-                <Image
-                    src="/images/logo.jpeg"
-                    alt="Jookies Bakery"
-                    fill
-                    className="object-contain mix-blend-multiply brightness-[1.02] contrast-[1.05]"
-                    priority
-                    sizes="(max-width: 768px) 96px, 128px"
-                />
-            </div>
+        <div className={cn("relative overflow-hidden", className)}>
+            {/* 
+              The source logo.jpeg is square with ~60% whitespace top/bottom.
+              We scale 2.6x and offset vertically so only the text band is visible.
+              mix-blend-multiply hides the white JPEG background against any light bg.
+            */}
+            <Image
+                src="/images/logo.jpeg"
+                alt="Jookies Bakery"
+                fill
+                className="object-cover mix-blend-multiply scale-[2.6] translate-y-[5%]"
+                priority
+                sizes="(max-width: 768px) 176px, 200px"
+            />
         </div>
     );
 }
