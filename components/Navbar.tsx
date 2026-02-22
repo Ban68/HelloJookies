@@ -51,9 +51,9 @@ export function Navbar() {
                         </div>
 
                         {/* Center: Logo */}
-                        <div className="flex-shrink-0">
-                            <Link href="/" className="hover:opacity-90 transition-opacity">
-                                <Logo className="w-44 h-[88px] md:w-[200px] md:h-[96px]" />
+                        <div className="flex justify-start md:justify-center items-center">
+                            <Link href="/" className="hover:opacity-80 transition-opacity">
+                                <Logo className={`transition-all duration-500 ${scrolled ? "w-32 h-14 md:w-40 md:h-16" : "w-36 h-16 md:w-48 md:h-20"}`} />
                             </Link>
                         </div>
 
