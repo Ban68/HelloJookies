@@ -1,8 +1,11 @@
+"use client";
+
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
-// Mock Data (Same as original page for now, but imported or passed as props ideally)
 const PREVIEW_PRODUCTS = [
     {
         id: "1",
@@ -31,45 +34,85 @@ const PREVIEW_PRODUCTS = [
 ];
 
 export default function MarketplacePreview() {
+    const sectionRef = useRef(null);
+    const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
+
     return (
-        <section id="marketplace" className="py-24 bg-jookies-beige relative">
-            <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-white to-transparent" />
+        <section id="marketplace" ref={sectionRef} className="py-28 bg-jookies-beige relative">
+            {/* Top gradient transition */}
+            <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-white to-transparent" />
 
             <div className="max-w-7xl mx-auto px-6">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+                {/* Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.7 }}
+                    className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-6"
+                >
                     <div className="max-w-xl">
                         <span className="text-jookies-primary font-bold tracking-wider uppercase text-sm">El &quot;Cookie Jar&quot;</span>
-                        <h2 className="font-heading text-4xl md:text-5xl font-bold text-jookies-text mt-2">
+                        <h2 className="font-heading text-4xl md:text-5xl font-bold text-jookies-text mt-3 leading-tight">
                             Favoritos de la Semana
                         </h2>
-                        <p className="text-jookies-text/70 mt-4 text-lg">
+                        <p className="text-jookies-text/60 mt-4 text-base leading-relaxed">
                             Estas son las que todos se están llevando. Pide la tuya antes de que se acaben.
                         </p>
                     </div>
-                    <div className="hidden md:block">
+                    <div className="hidden md:block flex-shrink-0">
                         <Link href="/menu">
-                            <Button variant="outline" className="border-jookies-text text-jookies-text hover:bg-jookies-text hover:text-white transition-colors">
+                            <Button variant="outline" className="border-jookies-text text-jookies-text hover:bg-jookies-text hover:text-white transition-all rounded-full">
                                 Ver Menú Completo →
                             </Button>
                         </Link>
                     </div>
-                </div>
+                </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {PREVIEW_PRODUCTS.map((product) => (
-                        <div key={product.id} className="transform hover:-translate-y-2 transition-transform duration-300">
+                {/* Desktop Grid / Mobile Horizontal Scroll */}
+                <div className="hidden md:grid md:grid-cols-3 gap-8">
+                    {PREVIEW_PRODUCTS.map((product, i) => (
+                        <motion.div
+                            key={product.id}
+                            initial={{ opacity: 0, y: 40 }}
+                            animate={isInView ? { opacity: 1, y: 0 } : {}}
+                            transition={{ duration: 0.6, delay: 0.15 * i }}
+                            className="hover:-translate-y-2 transition-transform duration-300"
+                        >
                             <ProductCard {...product} />
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
 
-                <div className="mt-12 text-center md:hidden">
+                {/* Mobile Horizontal Scroll */}
+                <div className="md:hidden -mx-6 px-6">
+                    <div className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4">
+                        {PREVIEW_PRODUCTS.map((product, i) => (
+                            <motion.div
+                                key={product.id}
+                                initial={{ opacity: 0, x: 40 }}
+                                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                                transition={{ duration: 0.5, delay: 0.1 * i }}
+                                className="flex-shrink-0 w-[75vw] snap-center"
+                            >
+                                <ProductCard {...product} />
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Mobile CTA */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                    className="mt-10 text-center md:hidden"
+                >
                     <Link href="/menu">
-                        <Button className="w-full bg-jookies-text text-white py-4 rounded-xl shadow-lg">
-                            Ver Menú Completo
+                        <Button className="w-full bg-jookies-text text-white py-4 rounded-2xl shadow-elevated text-base">
+                            Ver Menú Completo →
                         </Button>
                     </Link>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

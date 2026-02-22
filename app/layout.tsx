@@ -4,6 +4,8 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { CartSidebar } from "@/components/CartSidebar";
 import { QuickOrderModal } from "@/components/QuickOrderModal";
+import { Footer } from "@/components/Footer";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -33,11 +35,13 @@ export default function RootLayout({
         className={`${fraunces.variable} ${inter.variable} antialiased bg-jookies-beige text-jookies-text`}
       >
         <Navbar />
-        <main className="pt-40">
+        <main className="pt-20">
           {children}
         </main>
+        <Footer />
         <CartSidebar />
         <QuickOrderModal />
+        <WhatsAppButton />
       </body>
     </html>
   );

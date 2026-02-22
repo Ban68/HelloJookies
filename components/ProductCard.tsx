@@ -1,80 +1,81 @@
 "use client";
-import Image from 'next/image';
-import { Plus, Check } from 'lucide-react';
-import { useCartStore } from '@/lib/store';
-import { useState } from 'react';
 
-interface ProductCardProps {
+import Image from "next/image";
+import { useCartStore } from "@/lib/store";
+import { ShoppingBag, Check } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+
+type ProductCardProps = {
     id: string;
     name: string;
     description: string;
     price: number;
     imageUrl: string;
     category: string;
-}
+};
 
 export function ProductCard({ id, name, description, price, imageUrl, category }: ProductCardProps) {
     const addItem = useCartStore((state) => state.addItem);
-    const toggleCart = useCartStore((state) => state.toggleCart);
-    const [justAdded, setJustAdded] = useState(false);
+    const [added, setAdded] = useState(false);
 
     const handleAdd = () => {
-        addItem({
-            id,
-            name,
-            price,
-            image_url: imageUrl,
-        });
-        setJustAdded(true);
-        setTimeout(() => {
-            setJustAdded(false);
-            toggleCart();
-        }, 600);
+        addItem({ id, name, price, image_url: imageUrl });
+        setAdded(true);
+        setTimeout(() => setAdded(false), 1500);
     };
 
-    const categoryBg = category === 'box' ? 'bg-jookies-blue/10' : 'bg-jookies-yellow/10';
-
     return (
-        <div className={`group relative flex flex-col rounded-3xl overflow-hidden transition-all duration-500 border border-transparent hover:border-jookies-text/5 hover:shadow-xl bg-white ${categoryBg}`}>
-            {/* Image */}
-            <div className="relative aspect-square overflow-hidden">
+        <div className="group flex flex-col bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-elevated transition-all duration-500 border border-transparent hover:border-jookies-text/5 h-full">
+            {/* Image Container */}
+            <div className="relative aspect-square overflow-hidden bg-jookies-beige">
                 <Image
                     src={imageUrl}
                     alt={name}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    unoptimized
+                    className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                 />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                {/* Category badge */}
+                {category === "box" && (
+                    <div className="absolute top-3 left-3 bg-jookies-primary text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider z-10 shadow-sm">
+                        🎁 Caja
+                    </div>
+                )}
+
+                {/* Quick add button on hover */}
+                <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    onClick={handleAdd}
+                    className="absolute bottom-3 right-3 z-10 bg-white text-jookies-text w-11 h-11 rounded-full flex items-center justify-center shadow-elevated opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-jookies-primary hover:text-white translate-y-2 group-hover:translate-y-0"
+                >
+                    {added ? <Check className="w-5 h-5" /> : <ShoppingBag className="w-5 h-5" />}
+                </motion.button>
             </div>
 
-            {/* Info */}
-            <div className="p-4 flex-1 flex flex-col justify-between">
-                <div>
-                    <h3 className="font-heading text-base font-bold text-jookies-text leading-tight mb-0.5">
-                        {name}
-                    </h3>
-                    <p className="text-[11px] text-jookies-text/40 line-clamp-1 mb-2">{description}</p>
-                </div>
+            {/* Content */}
+            <div className="p-5 flex flex-col flex-grow">
+                <h3 className="font-heading text-lg font-bold text-jookies-text mb-1.5 leading-tight group-hover:text-jookies-primary transition-colors">
+                    {name}
+                </h3>
+                <p className="text-sm text-jookies-text/50 mb-4 line-clamp-2 leading-relaxed flex-grow">
+                    {description}
+                </p>
 
-                <div className="flex items-center justify-between mt-2">
-                    <span className="font-heading text-lg font-bold text-jookies-primary">
+                <div className="flex items-center justify-between pt-2 border-t border-jookies-text/5">
+                    <span className="font-heading text-xl font-black text-jookies-text">
                         ${price.toLocaleString("es-CO")}
                     </span>
-
                     <button
                         onClick={handleAdd}
-                        className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 ${justAdded
-                            ? "bg-emerald-500 text-white scale-110"
-                            : "bg-jookies-beige text-jookies-text hover:bg-jookies-text hover:text-white"
+                        className={`text-xs font-bold px-4 py-2 rounded-full transition-all duration-300 ${added
+                            ? "bg-jookies-green text-white"
+                            : "bg-jookies-beige text-jookies-text hover:bg-jookies-primary hover:text-white"
                             }`}
                     >
-                        {justAdded ? (
-                            <Check className="w-4 h-4" />
-                        ) : (
-                            <Plus className="w-4 h-4" />
-                        )}
+                        {added ? "✓ Agregado" : "+ Agregar"}
                     </button>
                 </div>
             </div>

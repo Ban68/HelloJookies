@@ -1,54 +1,110 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { motion } from "framer-motion";
 
 export default function Hero() {
     return (
-        <section className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-jookies-beige">
-            {/* Background Video/Image Placeholder */}
+        <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-jookies-beige">
+            {/* Animated Gradient Mesh Background */}
             <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-black/10 z-10" />
-                {/* Replace with actual video or high-res image */}
-                <div className="w-full h-full bg-gradient-to-br from-jookies-beige via-jookies-primary/20 to-jookies-secondary/20" />
+                <div className="absolute inset-0 bg-gradient-to-br from-jookies-beige via-jookies-primary/10 to-jookies-secondary/10 animate-gradient" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,128,171,0.15),transparent_60%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(79,195,247,0.1),transparent_60%)]" />
             </div>
 
-            {/* Decorative Background Elements */}
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-jookies-primary/10 rounded-full blur-3xl animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-jookies-secondary/10 rounded-full blur-3xl animate-pulse delay-700" />
+            {/* Floating Decorative Blobs */}
+            <div className="absolute top-[15%] left-[10%] w-72 h-72 bg-jookies-primary/8 rounded-full blur-3xl animate-blob" />
+            <div className="absolute bottom-[20%] right-[10%] w-64 h-64 bg-jookies-secondary/8 rounded-full blur-3xl animate-blob animation-delay-2000" />
+            <div className="absolute top-[60%] left-[60%] w-48 h-48 bg-jookies-yellow/10 rounded-full blur-3xl animate-blob animation-delay-4000" />
 
+            {/* Floating Cookie Decorations */}
+            <div className="absolute top-[12%] right-[15%] text-5xl md:text-7xl animate-float opacity-20 select-none pointer-events-none">🍪</div>
+            <div className="absolute bottom-[25%] left-[8%] text-4xl md:text-6xl animate-float-reverse opacity-15 select-none pointer-events-none animation-delay-1000">🍪</div>
+            <div className="absolute top-[45%] right-[5%] text-3xl animate-float opacity-10 select-none pointer-events-none animation-delay-2000">✨</div>
+            <div className="absolute bottom-[15%] right-[25%] text-3xl animate-float-reverse opacity-10 select-none pointer-events-none">🧈</div>
+
+            {/* Dot Pattern */}
+            <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#2D3436_1px,transparent_1px)] [background-size:32px_32px]" />
+
+            {/* Content */}
             <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
-                <span className="inline-block py-1 px-3 rounded-full bg-white/80 backdrop-blur-sm text-jookies-text text-sm font-medium tracking-wide mb-6 animate-fade-in-up border border-jookies-text/10">
+                <motion.span
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="inline-block py-2 px-5 rounded-full bg-white/80 backdrop-blur-sm text-jookies-text text-sm font-medium tracking-wide mb-8 border border-jookies-text/5 shadow-sm"
+                >
                     🍪 Horneadas con amor en Santa Marta
-                </span>
+                </motion.span>
 
-                <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-black text-jookies-text mb-8 leading-tight tracking-tight animate-fade-in-up delay-100 drop-shadow-sm">
+                <motion.h1
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.15 }}
+                    className="font-heading text-5xl md:text-7xl lg:text-8xl font-black text-jookies-text mb-8 leading-[1.05] tracking-tight"
+                >
                     Momentos que <br />
-                    <span className="text-jookies-primary" style={{ fontStyle: 'italic' }}>derriten</span> el alma.
-                </h1>
+                    <span className="text-jookies-primary italic relative">
+                        derriten
+                        <svg className="absolute -bottom-2 left-0 w-full h-3 text-jookies-primary/30" viewBox="0 0 200 8" preserveAspectRatio="none">
+                            <path d="M0 5 Q 50 0 100 5 T 200 5" stroke="currentColor" strokeWidth="2.5" fill="none" />
+                        </svg>
+                    </span> el alma.
+                </motion.h1>
 
-                <p className="font-body text-xl md:text-2xl text-jookies-text/90 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-in-up delay-200 drop-shadow-sm">
+                <motion.p
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.3 }}
+                    className="font-body text-lg md:text-xl text-jookies-text/70 mb-12 max-w-2xl mx-auto leading-relaxed"
+                >
                     Más que una galleta, es un abrazo calentito. Descubre la historia detrás de cada mordida.
-                </p>
+                </motion.p>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up delay-300">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.45 }}
+                    className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                >
+                    <Link href="#marketplace">
+                        <Button
+                            size="lg"
+                            className="bg-jookies-text text-white hover:bg-jookies-text/90 rounded-full px-10 py-6 text-base shadow-elevated hover:shadow-elevated-lg transition-all hover:-translate-y-0.5"
+                        >
+                            Pedir un Antojo 🍪
+                        </Button>
+                    </Link>
                     <Link href="#our-story">
-                        <Button size="lg" className="bg-jookies-text text-white hover:bg-jookies-text/90 rounded-full px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all">
+                        <Button
+                            size="lg"
+                            variant="outline"
+                            className="bg-white/60 backdrop-blur-md border-jookies-text/10 text-jookies-text hover:bg-white rounded-full px-10 py-6 text-base shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5"
+                        >
                             Nuestra Historia
                         </Button>
                     </Link>
-                    <Link href="#marketplace">
-                        <Button size="lg" variant="outline" className="bg-white/90 backdrop-blur-md border-white/50 text-jookies-text hover:bg-white rounded-full px-8 py-6 text-lg shadow-sm hover:shadow-md transition-all">
-                            Pedir un Antojo
-                        </Button>
-                    </Link>
-                </div>
+                </motion.div>
             </div>
 
             {/* Scroll Indicator */}
-            <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-                <div className="w-6 h-10 border-2 border-jookies-text/30 rounded-full flex justify-center">
-                    <div className="w-1 h-2 bg-jookies-text/50 rounded-full mt-2" />
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.5 }}
+                className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
+            >
+                <span className="text-jookies-text/30 text-xs font-medium tracking-widest uppercase">Descubre más</span>
+                <div className="w-5 h-9 border-2 border-jookies-text/20 rounded-full flex justify-center pt-1.5">
+                    <motion.div
+                        animate={{ y: [0, 8, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        className="w-1 h-1.5 bg-jookies-text/40 rounded-full"
+                    />
                 </div>
-            </div>
+            </motion.div>
         </section>
     );
 }

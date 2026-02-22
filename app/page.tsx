@@ -3,6 +3,7 @@ import StorySection from "@/components/landing/StorySection";
 import ContentGrid from "@/components/landing/ContentGrid";
 import MarketplacePreview from "@/components/landing/MarketplacePreview";
 import NewsletterSignup from "@/components/landing/NewsletterSignup";
+import TestimonialsSection from "@/components/landing/TestimonialsSection";
 
 export default function Home() {
   return (
@@ -16,10 +17,13 @@ export default function Home() {
       {/* 3. Marketplace Preview: Strategically placed, visible but not aggressive */}
       <MarketplacePreview />
 
-      {/* 4. Content Hub: The "Meat" of the organic strategy (SEO, engagement) */}
+      {/* 4. Social Proof: Customer testimonials */}
+      <TestimonialsSection />
+
+      {/* 5. Content Hub: The "Meat" of the organic strategy (SEO, engagement) */}
       <ContentGrid />
 
-      {/* 5. Lead Capture: Build the community */}
+      {/* 6. Lead Capture: Build the community */}
       <NewsletterSignup />
     </main>
   );

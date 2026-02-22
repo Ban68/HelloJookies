@@ -4,8 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { Plus, Check, ShoppingBag } from "lucide-react";
 import { useCartStore } from "@/lib/store";
+import { motion, AnimatePresence } from "framer-motion";
 
-/* ÔöÇÔöÇÔöÇ Product Data ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ─── Product Data ─────────────────────────────────────────── */
 interface Product {
     id: string;
     name: string;
@@ -22,7 +23,7 @@ const products: Product[] = [
     { id: "jookiefit-choco", name: "Jookiefit Chocolate", base: "Jookiefit chocolate", price: 13000, image: "/images/klim-brigadeiro.jpg", tag: "Fit" },
     { id: "reeses", name: "Reese's", base: "Reese's", price: 10000, image: "/images/kinder-bueno.jpg" },
     { id: "chewy-milo", name: "Chewy Milo", base: "Chewy Milo", topping: "Milo fudge", price: 8000, image: "/images/klim-brigadeiro.jpg" },
-    { id: "oreo-blanca", name: "Oreo & Blanca", base: "Oreo&blanca", price: 11000, image: "/images/red-velvet.jpg" },
+    { id: "oreo-blanca", name: "Oreo & Blanca", base: "Oreo & blanca", price: 11000, image: "/images/red-velvet.jpg" },
     { id: "caramelo-pecans", name: "Caramelo Salado & Pecans", base: "Caramelo salado & pecans", topping: "Caramelo salado", price: 8000, image: "/images/kinder-bueno.jpg" },
     { id: "nutella-lovers", name: "Nutella Lovers", base: "Nutella Lovers", price: 10000, image: "/images/red-velvet.jpg", tag: "Fan Fave" },
     { id: "choco-chips", name: "Chocolate Chips", base: "Chocolate chips", price: 8000, image: "/images/klim-brigadeiro.jpg" },
@@ -32,68 +33,81 @@ const products: Product[] = [
     { id: "klim", name: "Klim", base: "Klim", topping: "Klim brigadeiro", price: 8000, image: "/images/klim-brigadeiro.jpg" },
     { id: "choco-jookie", name: "Chocolate Jookie", base: "Chocolate Jookie", price: 8000, image: "/images/klim-brigadeiro.jpg" },
     { id: "plain", name: "Plain", base: "Plain", price: 8000, image: "/images/red-velvet.jpg" },
-    { id: "thin-biscoff", name: "Thin Biscoff ÔÇô Choco", base: "Thin Biscoff - Choco", price: 9000, image: "/images/kinder-bueno.jpg" },
+    { id: "thin-biscoff", name: "Thin Biscoff \u2013 Choco", base: "Thin Biscoff - Choco", price: 9000, image: "/images/kinder-bueno.jpg" },
     { id: "kinder-bueno", name: "Kinder Bueno", base: "Kinder Bueno", price: 10000, image: "/images/kinder-bueno.jpg", tag: "Bestseller" },
     { id: "red-velvet", name: "Red Velvet", base: "Red Velvet", price: 10000, image: "/images/red-velvet.jpg", tag: "Fan Fave" },
-    { id: "key-lime-pie", name: "Key Lime Pie", base: "Key Lime Pie", price: 25000, image: "/images/plan-playa-box.jpg", tag: "Edici├│n Especial" },
+    { id: "key-lime-pie", name: "Key Lime Pie", base: "Key Lime Pie", price: 25000, image: "/images/plan-playa-box.jpg", tag: "Edici\u00f3n Especial" },
 ];
 
-/* ÔöÇÔöÇÔöÇ Filters ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ─── Filters ──────────────────────────────────────────────── */
 type FilterType = "all" | "bestsellers" | "fit" | "especial";
 
-const filters: { value: FilterType; label: string }[] = [
-    { value: "all", label: "Todas" },
-    { value: "bestsellers", label: "M├ís pedidas" },
-    { value: "fit", label: "Fit" },
-    { value: "especial", label: "Edici├│n Especial" },
+const filters: { value: FilterType; label: string; emoji: string }[] = [
+    { value: "all", label: "Todas", emoji: "🍪" },
+    { value: "bestsellers", label: "Top Picks", emoji: "🔥" },
+    { value: "fit", label: "Fit", emoji: "💪" },
+    { value: "especial", label: "Especial", emoji: "✨" },
 ];
 
 function matchesFilter(product: Product, filter: FilterType) {
     if (filter === "all") return true;
     if (filter === "bestsellers") return product.tag === "Bestseller" || product.tag === "Fan Fave";
     if (filter === "fit") return product.tag === "Fit";
-    if (filter === "especial") return product.tag === "Edici├│n Especial";
+    if (filter === "especial") return product.tag === "Edici\u00f3n Especial";
     return true;
 }
 
-/* ÔöÇÔöÇÔöÇ Page ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ─── Page ─────────────────────────────────────────────────── */
 export default function MenuPage() {
     const [activeFilter, setActiveFilter] = useState<FilterType>("all");
     const cartItems = useCartStore((s) => s.items);
     const cartTotal = useCartStore((s) => s.total());
+    const toggleCart = useCartStore((s) => s.toggleCart);
     const itemCount = cartItems.reduce((sum, i) => sum + i.quantity, 0);
 
     const filtered = products.filter((p) => matchesFilter(p, activeFilter));
 
     return (
         <div className="min-h-screen bg-jookies-beige">
-            {/* ÔöÇÔöÇ Header ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
-            <section className="pt-12 pb-8 px-6 text-center">
-                <p className="text-jookies-primary font-heading font-bold text-sm tracking-[0.25em] uppercase mb-3">
-                    Horneadas con amor
-                </p>
-                <h1 className="font-heading text-5xl md:text-6xl font-black text-jookies-text leading-tight">
-                    Nuestras Galletas
-                </h1>
-                <p className="mt-4 text-jookies-text/50 max-w-md mx-auto text-sm leading-relaxed">
-                    Cada galleta es preparada a mano con ingredientes seleccionados.<br className="hidden md:block" />
-                    Crocante por fuera, suave por dentro.
-                </p>
+            {/* ── Hero Header ──────────────────────────────── */}
+            <section className="pt-16 pb-10 px-6 text-center relative overflow-hidden">
+                {/* Decorative background */}
+                <div className="absolute inset-0 bg-gradient-to-b from-jookies-primary/5 via-transparent to-transparent" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-jookies-primary/5 rounded-full blur-3xl -translate-y-2/3" />
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="relative z-10"
+                >
+                    <span className="text-jookies-primary font-heading font-bold text-sm tracking-[0.25em] uppercase mb-4 inline-block">
+                        Horneadas con amor
+                    </span>
+                    <h1 className="font-heading text-5xl md:text-6xl font-black text-jookies-text leading-tight">
+                        Nuestras Galletas
+                    </h1>
+                    <p className="mt-5 text-jookies-text/50 max-w-md mx-auto text-base leading-relaxed">
+                        Cada galleta es preparada a mano con ingredientes seleccionados.<br className="hidden md:block" />
+                        Crocante por fuera, suave por dentro.
+                    </p>
+                </motion.div>
             </section>
 
-            {/* ÔöÇÔöÇ Filters ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
-            <div className="sticky top-[160px] z-30 bg-jookies-beige/95 backdrop-blur-md border-b border-jookies-text/5">
+            {/* ── Filters ──────────────────────────────────── */}
+            <div className="sticky top-20 z-30 bg-jookies-beige/95 backdrop-blur-lg border-b border-jookies-text/5">
                 <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
                     <div className="flex gap-2 overflow-x-auto scrollbar-hide">
                         {filters.map((f) => (
                             <button
                                 key={f.value}
                                 onClick={() => setActiveFilter(f.value)}
-                                className={`px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ${activeFilter === f.value
-                                        ? "bg-jookies-text text-white shadow-md"
-                                        : "bg-white text-jookies-text/60 hover:bg-white hover:text-jookies-text hover:shadow-sm"
+                                className={`px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 flex items-center gap-1.5 ${activeFilter === f.value
+                                    ? "bg-jookies-text text-white shadow-md"
+                                    : "bg-white text-jookies-text/60 hover:text-jookies-text hover:shadow-sm"
                                     }`}
                             >
+                                <span className="text-xs">{f.emoji}</span>
                                 {f.label}
                             </button>
                         ))}
@@ -101,48 +115,66 @@ export default function MenuPage() {
 
                     {/* Mini cart indicator */}
                     {itemCount > 0 && (
-                        <button
-                            onClick={() => useCartStore.getState().toggleCart()}
-                            className="flex items-center gap-2 bg-jookies-text text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg hover:scale-105 transition-transform ml-4 flex-shrink-0"
+                        <motion.button
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            onClick={toggleCart}
+                            className="flex items-center gap-2 bg-jookies-text text-white px-4 py-2.5 rounded-full text-sm font-medium shadow-lg hover:scale-105 transition-transform ml-4 flex-shrink-0"
                         >
                             <ShoppingBag className="w-4 h-4" />
                             <span>{itemCount}</span>
-                            <span className="hidden sm:inline">┬À</span>
+                            <span className="hidden sm:inline">·</span>
                             <span className="hidden sm:inline">${cartTotal.toLocaleString("es-CO")}</span>
-                        </button>
+                        </motion.button>
                     )}
                 </div>
             </div>
 
-            {/* ÔöÇÔöÇ Product Grid ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
+            {/* ── Product Grid ─────────────────────────────── */}
             <section className="max-w-6xl mx-auto px-6 py-10">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                    {filtered.map((product) => (
-                        <MenuCard key={product.id} product={product} />
-                    ))}
-                </div>
+                <motion.div
+                    layout
+                    className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
+                >
+                    <AnimatePresence mode="popLayout">
+                        {filtered.map((product, i) => (
+                            <motion.div
+                                key={product.id}
+                                layout
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                transition={{ duration: 0.3, delay: Math.min(i * 0.04, 0.3) }}
+                            >
+                                <MenuCard product={product} />
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
+                </motion.div>
 
                 {filtered.length === 0 && (
                     <div className="text-center py-20 text-jookies-text/40">
-                        <p className="text-lg font-heading font-bold">No hay galletas en esta categor├¡a</p>
+                        <p className="text-4xl mb-4">🍪</p>
+                        <p className="text-lg font-heading font-bold">No hay galletas en esta categor&iacute;a</p>
+                        <p className="text-sm mt-2">Prueba con otro filtro</p>
                     </div>
                 )}
             </section>
 
-            {/* ÔöÇÔöÇ Bottom CTA / Info ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */}
+            {/* ── Bottom CTA / Info ────────────────────────── */}
             <section className="border-t border-jookies-text/5 bg-white">
                 <div className="max-w-4xl mx-auto px-6 py-16 text-center">
                     <h2 className="font-heading text-2xl font-bold text-jookies-text mb-3">
-                        ┬┐No encuentras lo que buscas?
+                        &iquest;No encuentras lo que buscas?
                     </h2>
                     <p className="text-jookies-text/50 text-sm mb-6">
-                        Escr├¡benos por Instagram y te ayudamos con pedidos especiales, cajas personalizadas y m├ís.
+                        Escr&iacute;benos por Instagram y te ayudamos con pedidos especiales, cajas personalizadas y m&aacute;s.
                     </p>
                     <a
                         href="https://www.instagram.com/jookiesbakery/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white font-bold text-sm px-8 py-3 rounded-full hover:scale-105 transition-transform shadow-lg"
+                        className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white font-heading font-bold text-sm px-8 py-3.5 rounded-full hover:scale-105 transition-transform shadow-lg"
                     >
                         @jookiesbakery
                     </a>
@@ -152,7 +184,7 @@ export default function MenuPage() {
     );
 }
 
-/* ÔöÇÔöÇÔöÇ Menu Card ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ */
+/* ─── Menu Card ───────────────────────────────────────────── */
 function MenuCard({ product }: { product: Product }) {
     const addItem = useCartStore((s) => s.addItem);
     const [justAdded, setJustAdded] = useState(false);
@@ -173,11 +205,11 @@ function MenuCard({ product }: { product: Product }) {
         "Nuevo": "bg-jookies-green text-white",
         "Fit": "bg-emerald-100 text-emerald-700",
         "Fan Fave": "bg-jookies-pink/20 text-jookies-pink",
-        "Edici├│n Especial": "bg-amber-100 text-amber-700",
+        "Edici\u00f3n Especial": "bg-amber-100 text-amber-700",
     };
 
     return (
-        <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-500 border border-transparent hover:border-jookies-text/5">
+        <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden hover:shadow-elevated transition-all duration-500 border border-transparent hover:border-jookies-text/5">
             {/* Tag */}
             {product.tag && (
                 <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase ${tagColors[product.tag] || "bg-gray-100 text-gray-600"}`}>
@@ -191,18 +223,29 @@ function MenuCard({ product }: { product: Product }) {
                     src={product.image}
                     alt={product.name}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
                     sizes="(max-width: 768px) 50vw, 25vw"
                     unoptimized
                 />
-                {/* Hover overlay with add button */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                {/* Quick add on hover (mobile: always show) */}
+                <button
+                    onClick={handleAdd}
+                    className={`absolute bottom-3 right-3 z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-lg md:opacity-0 md:translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-y-0 ${justAdded
+                            ? "bg-emerald-500 text-white scale-110"
+                            : "bg-white text-jookies-text hover:bg-jookies-text hover:text-white"
+                        }`}
+                >
+                    {justAdded ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                </button>
             </div>
 
             {/* Info */}
             <div className="p-4 flex-1 flex flex-col justify-between">
                 <div>
-                    <h3 className="font-heading text-base font-bold text-jookies-text leading-tight mb-0.5">
+                    <h3 className="font-heading text-base font-bold text-jookies-text leading-tight mb-0.5 group-hover:text-jookies-primary transition-colors">
                         {product.name}
                     </h3>
                     {product.topping && (
@@ -219,16 +262,12 @@ function MenuCard({ product }: { product: Product }) {
 
                     <button
                         onClick={handleAdd}
-                        className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 ${justAdded
-                                ? "bg-emerald-500 text-white scale-110"
-                                : "bg-jookies-beige text-jookies-text hover:bg-jookies-text hover:text-white"
+                        className={`hidden md:flex text-xs font-bold px-3 py-1.5 rounded-full transition-all duration-300 items-center gap-1 ${justAdded
+                            ? "bg-emerald-500 text-white"
+                            : "bg-jookies-beige text-jookies-text hover:bg-jookies-primary hover:text-white"
                             }`}
                     >
-                        {justAdded ? (
-                            <Check className="w-4 h-4" />
-                        ) : (
-                            <Plus className="w-4 h-4" />
-                        )}
+                        {justAdded ? "✓" : "+"}
                     </button>
                 </div>
             </div>
