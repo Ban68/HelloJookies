@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Plus, Check, ShoppingBag } from "lucide-react";
+import Link from "next/link";
+import { Plus, Check, ShoppingBag, Sparkles } from "lucide-react";
 import { useCartStore } from "@/lib/store";
 
 /* ─── Product Data ─────────────────────────────────────────────── */
@@ -41,11 +42,11 @@ const products: Product[] = [
 /* ─── Filters ──────────────────────────────────────────────────── */
 type FilterType = "all" | "bestsellers" | "fit" | "especial";
 
-const filters: { value: FilterType; label: string }[] = [
-    { value: "all", label: "Todas" },
-    { value: "bestsellers", label: "Más pedidas" },
-    { value: "fit", label: "Fit" },
-    { value: "especial", label: "Edición Especial" },
+const filters: { value: FilterType; label: string; emoji?: string }[] = [
+    { value: "all", label: "Todas", emoji: "🍪" },
+    { value: "bestsellers", label: "Más pedidas", emoji: "🔥" },
+    { value: "fit", label: "Fit", emoji: "💪" },
+    { value: "especial", label: "Edición Especial", emoji: "✨" },
 ];
 
 function matchesFilter(product: Product, filter: FilterType) {
@@ -67,33 +68,44 @@ export default function MenuPage() {
 
     return (
         <div className="min-h-screen bg-jookies-beige">
-            {/* ── Header ────────────────────────────── */}
-            <section className="pt-12 pb-8 px-6 text-center">
-                <p className="text-jookies-primary font-heading font-bold text-sm tracking-[0.25em] uppercase mb-3">
-                    Horneadas con amor
-                </p>
-                <h1 className="font-heading text-5xl md:text-6xl font-black text-jookies-text leading-tight">
-                    Nuestras Galletas
-                </h1>
-                <p className="mt-4 text-jookies-text/50 max-w-md mx-auto text-sm leading-relaxed">
-                    Cada galleta es preparada a mano con ingredientes seleccionados.<br className="hidden md:block" />
-                    Crocante por fuera, suave por dentro.
-                </p>
+            {/* ── Hero Banner ────────────────────── */}
+            <section className="relative pt-12 pb-16 px-6 text-center overflow-hidden">
+                {/* Decorative blobs */}
+                <div className="absolute top-0 left-1/4 w-80 h-80 bg-jookies-primary/8 rounded-full blur-[80px] pointer-events-none" />
+                <div className="absolute bottom-0 right-1/4 w-60 h-60 bg-jookies-secondary/8 rounded-full blur-[80px] pointer-events-none" />
+
+                <div className="relative z-10">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-jookies-primary/10 rounded-full text-jookies-primary text-xs font-bold tracking-wider uppercase mb-4 animate-fade-in-up">
+                        <Sparkles className="w-3.5 h-3.5" />
+                        Horneadas con amor
+                    </div>
+
+                    <h1 className="font-heading text-5xl md:text-7xl font-black text-jookies-text leading-[0.95] mb-4 animate-fade-in-up delay-100">
+                        Nuestras <span className="text-jookies-primary">Galletas</span>
+                    </h1>
+
+                    <p className="mt-4 text-jookies-text/40 max-w-lg mx-auto text-sm leading-relaxed animate-fade-in-up delay-200">
+                        Cada galleta es preparada a mano con ingredientes seleccionados.
+                        <br className="hidden md:block" />
+                        Crocante por fuera, suave por dentro.
+                    </p>
+                </div>
             </section>
 
             {/* ── Filters ───────────────────────────── */}
-            <div className="sticky top-[160px] z-30 bg-jookies-beige/95 backdrop-blur-md border-b border-jookies-text/5">
+            <div className="sticky top-28 z-30 glass border-b border-jookies-text/5">
                 <div className="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
                     <div className="flex gap-2 overflow-x-auto scrollbar-hide">
                         {filters.map((f) => (
                             <button
                                 key={f.value}
                                 onClick={() => setActiveFilter(f.value)}
-                                className={`px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ${activeFilter === f.value
-                                        ? "bg-jookies-text text-white shadow-md"
-                                        : "bg-white text-jookies-text/60 hover:bg-white hover:text-jookies-text hover:shadow-sm"
+                                className={`px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 flex items-center gap-1.5 ${activeFilter === f.value
+                                    ? "bg-jookies-text text-white shadow-md scale-105"
+                                    : "bg-white text-jookies-text/50 hover:bg-white hover:text-jookies-text hover:shadow-sm"
                                     }`}
                             >
+                                <span className="text-xs">{f.emoji}</span>
                                 {f.label}
                             </button>
                         ))}
@@ -103,11 +115,11 @@ export default function MenuPage() {
                     {itemCount > 0 && (
                         <button
                             onClick={() => useCartStore.getState().toggleCart()}
-                            className="flex items-center gap-2 bg-jookies-text text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg hover:scale-105 transition-transform ml-4 flex-shrink-0"
+                            className="flex items-center gap-2 bg-jookies-text text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg hover:scale-105 transition-all duration-300 ml-4 flex-shrink-0"
                         >
                             <ShoppingBag className="w-4 h-4" />
                             <span>{itemCount}</span>
-                            <span className="hidden sm:inline">·</span>
+                            <span className="hidden sm:inline text-white/40">·</span>
                             <span className="hidden sm:inline">${cartTotal.toLocaleString("es-CO")}</span>
                         </button>
                     )}
@@ -117,14 +129,16 @@ export default function MenuPage() {
             {/* ── Product Grid ──────────────────────── */}
             <section className="max-w-6xl mx-auto px-6 py-10">
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                    {filtered.map((product) => (
-                        <MenuCard key={product.id} product={product} />
+                    {filtered.map((product, index) => (
+                        <MenuCard key={product.id} product={product} index={index} />
                     ))}
                 </div>
 
                 {filtered.length === 0 && (
                     <div className="text-center py-20 text-jookies-text/40">
+                        <span className="text-5xl block mb-4">🍪</span>
                         <p className="text-lg font-heading font-bold">No hay galletas en esta categoría</p>
+                        <p className="text-sm mt-2">Prueba con otra categoría o mira todas</p>
                     </div>
                 )}
             </section>
@@ -135,14 +149,14 @@ export default function MenuPage() {
                     <h2 className="font-heading text-2xl font-bold text-jookies-text mb-3">
                         ¿No encuentras lo que buscas?
                     </h2>
-                    <p className="text-jookies-text/50 text-sm mb-6">
+                    <p className="text-jookies-text/40 text-sm mb-6">
                         Escríbenos por Instagram y te ayudamos con pedidos especiales, cajas personalizadas y más.
                     </p>
                     <a
                         href="https://www.instagram.com/jookiesbakery/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white font-bold text-sm px-8 py-3 rounded-full hover:scale-105 transition-transform shadow-lg"
+                        className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white font-bold text-sm px-8 py-3 rounded-full hover:scale-105 hover:shadow-lg transition-all duration-300"
                     >
                         @jookiesbakery
                     </a>
@@ -153,7 +167,7 @@ export default function MenuPage() {
 }
 
 /* ─── Menu Card ─────────────────────────────────────────────────── */
-function MenuCard({ product }: { product: Product }) {
+function MenuCard({ product, index }: { product: Product; index: number }) {
     const addItem = useCartStore((s) => s.addItem);
     const [justAdded, setJustAdded] = useState(false);
 
@@ -169,7 +183,7 @@ function MenuCard({ product }: { product: Product }) {
     };
 
     const tagColors: Record<string, string> = {
-        "Bestseller": "bg-jookies-yellow text-jookies-text",
+        "Bestseller": "bg-jookies-yellow/80 text-jookies-text",
         "Nuevo": "bg-jookies-green text-white",
         "Fit": "bg-emerald-100 text-emerald-700",
         "Fan Fave": "bg-jookies-pink/20 text-jookies-pink",
@@ -177,7 +191,10 @@ function MenuCard({ product }: { product: Product }) {
     };
 
     return (
-        <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-500 border border-transparent hover:border-jookies-text/5">
+        <div
+            className="group relative flex flex-col bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-500 border border-transparent hover:border-jookies-text/5 hover:-translate-y-1"
+            style={{ animationDelay: `${index * 50}ms` }}
+        >
             {/* Tag */}
             {product.tag && (
                 <div className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase ${tagColors[product.tag] || "bg-gray-100 text-gray-600"}`}>
@@ -195,8 +212,8 @@ function MenuCard({ product }: { product: Product }) {
                     sizes="(max-width: 768px) 50vw, 25vw"
                     unoptimized
                 />
-                {/* Hover overlay with add button */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
 
             {/* Info */}
@@ -206,7 +223,7 @@ function MenuCard({ product }: { product: Product }) {
                         {product.name}
                     </h3>
                     {product.topping && (
-                        <p className="text-[11px] text-jookies-text/40 mb-2">
+                        <p className="text-[11px] text-jookies-text/35 mb-2">
                             con {product.topping}
                         </p>
                     )}
@@ -220,8 +237,8 @@ function MenuCard({ product }: { product: Product }) {
                     <button
                         onClick={handleAdd}
                         className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 ${justAdded
-                                ? "bg-emerald-500 text-white scale-110"
-                                : "bg-jookies-beige text-jookies-text hover:bg-jookies-text hover:text-white"
+                            ? "bg-emerald-500 text-white scale-110"
+                            : "bg-jookies-beige text-jookies-text hover:bg-jookies-primary hover:text-white hover:scale-110"
                             }`}
                     >
                         {justAdded ? (

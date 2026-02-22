@@ -4,6 +4,8 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { CartSidebar } from "@/components/CartSidebar";
 import { QuickOrderModal } from "@/components/QuickOrderModal";
+import { Footer } from "@/components/Footer";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -19,7 +21,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Hello Jookies | El antojo de Santa Marta",
-  description: "Galletas rellenas, toppings abundantes y delivery rápido en Santa Marta.",
+  description: "Galletas rellenas, toppings abundantes y delivery rápido en Santa Marta. Las mejores cookies artesanales de la costa caribe colombiana.",
+  keywords: "galletas, cookies, Santa Marta, Barranquilla, Bogotá, delivery, artesanales, Jookies",
 };
 
 export default function RootLayout({
@@ -33,9 +36,11 @@ export default function RootLayout({
         <Navbar />
         <CartSidebar />
         <QuickOrderModal />
-        <main className="pt-40 min-h-screen">
+        <main className="pt-28 min-h-screen">
           {children}
         </main>
+        <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   );
