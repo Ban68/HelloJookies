@@ -15,7 +15,7 @@ export default function AboutPage() {
                         Nuestra Historia
                     </span>
                     <h1 className="font-heading text-6xl md:text-8xl font-black text-jookies-text mb-8 leading-tight opacity-0 animate-[fade-in-up_0.8s_ease-out_0.2s_forwards]">
-                        M├ís que galletas, <br />
+                        Más que galletas, <br />
                         <span className="text-jookies-primary italic">momentos dulces.</span>
                     </h1>
                 </div>
@@ -31,17 +31,17 @@ export default function AboutPage() {
 
                         <div className="space-y-8">
                             <h2 className="font-heading text-4xl font-bold text-jookies-text leading-tight">
-                                Todo comenz├│ con un antojo y mucha curiosidad...
+                                Todo comenzó con un antojo y mucha curiosidad...
                             </h2>
                             <div className="prose prose-lg text-jookies-text/70 space-y-6">
                                 <p>
-                                    Jookies naci├│ en una peque├▒a cocina de **Santa Marta** con un objetivo claro: crear la galleta que nosotros mismos so├▒├íbamos encontrar. Quer├¡amos esa textura perfecta que es crujiente por fuera y pecaminosamente suave por dentro.
+                                    Jookies nació en una pequeña cocina de <strong className="text-jookies-text/80">Santa Marta</strong> con un objetivo claro: crear la galleta que nosotros mismos soñábamos encontrar. Queríamos esa textura perfecta que es crujiente por fuera y pecaminosamente suave por dentro.
                                 </p>
                                 <p>
-                                    Lo que empez├│ como un experimento creativo se convirti├│ r├ípidamente en un fen├│meno local. La gente no solo quer├¡a galletas, quer├¡a la experiencia de morder algo hecho con **chocolate de verdad** y mantequilla de la m├ís alta calidad.
+                                    Lo que empezó como un experimento creativo se convirtió rápidamente en un fenómeno local. La gente no solo quería galletas, quería la experiencia de morder algo hecho con <strong className="text-jookies-text/80">chocolate de verdad</strong> y mantequilla de la más alta calidad.
                                 </p>
                                 <p>
-                                    Hoy, esa pasi├│n nos ha llevado a expandirnos a **Barranquilla y Bogot├í**, llevando el "antojo reci├®n horneado" a m├ís rincones de Colombia, pero manteniendo siempre la esencia artesanal que nos vio nacer frente al Mar Caribe.
+                                    Hoy, esa pasión nos ha llevado a expandirnos a <strong className="text-jookies-text/80">Barranquilla y Bogotá</strong>, llevando el &ldquo;antojo recién horneado&rdquo; a más rincones de Colombia, pero manteniendo siempre la esencia artesanal que nos vio nacer frente al Mar Caribe.
                                 </p>
                             </div>
                         </div>
@@ -62,17 +62,17 @@ export default function AboutPage() {
                             {
                                 icon: <Star className="w-10 h-10 text-jookies-primary" />,
                                 title: "Calidad Sin Negociar",
-                                text: "Usamos solo ingredientes reales. Chocolate puro, trozos gigantes y masa fresca preparada cada d├¡a."
+                                text: "Usamos solo ingredientes reales. Chocolate puro, trozos gigantes y masa fresca preparada cada día."
                             },
                             {
                                 icon: <Heart className="w-10 h-10 text-jookies-primary" />,
                                 title: "Hecho a Mano",
-                                text: "Cada Jookie es boleada y armada artesanalmente. No hay dos iguales, porque la imperfecci├│n es parte del amor."
+                                text: "Cada Jookie es boleada y armada artesanalmente. No hay dos iguales, porque la imperfección es parte del amor."
                             },
                             {
                                 icon: <Zap className="w-10 h-10 text-jookies-primary" />,
                                 title: "Freshly Baked",
-                                text: "Horneamos en peque├▒os lotes durante todo el d├¡a. Si la pides, te llega calientica a tu puerta."
+                                text: "Horneamos en pequeños lotes durante todo el día. Si la pides, te llega calientica a tu puerta."
                             }
                         ].map((value, i) => (
                             <div key={i} className="bg-white p-10 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-jookies-primary/10">
@@ -94,16 +94,16 @@ export default function AboutPage() {
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-12">
                         <div className="max-w-xl">
-                            <h2 className="font-heading text-5xl font-bold mb-6">Encu├®ntranos en...</h2>
+                            <h2 className="font-heading text-5xl font-bold mb-6">Encuéntranos en...</h2>
                             <p className="text-xl opacity-80 mb-10">
-                                Estamos creciendo para estar m├ís cerca de tu pr├│ximo antojo. Vis├¡tanos o p├¡denos por delivery.
+                                Estamos creciendo para estar más cerca de tu próximo antojo. Visítanos o pídenos por delivery.
                             </p>
 
                             <div className="space-y-6">
                                 {[
-                                    { city: "Santa Marta", description: "Donde todo empez├│. El Rodadero y Centro." },
-                                    { city: "Barranquilla", description: "D├índole sabor a la Arenosa." },
-                                    { city: "Bogot├í", description: "Horneando felicidad a 2.600 metros." }
+                                    { city: "Santa Marta", description: "Donde todo empezó. El Rodadero y Centro." },
+                                    { city: "Barranquilla", description: "Dándole sabor a la Arenosa." },
+                                    { city: "Bogotá", description: "Horneando felicidad a 2.600 metros." }
                                 ].map((loc, i) => (
                                     <div key={i} className="flex items-start gap-4 p-4 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors">
                                         <MapPin className="w-6 h-6 text-jookies-primary mt-1" />
@@ -122,7 +122,7 @@ export default function AboutPage() {
                             </div>
                             <Link href="/menu">
                                 <Button size="lg" variant="primary" className="px-12 py-8 text-xl rounded-full bg-white text-jookies-text hover:bg-jookies-beige shadow-2xl">
-                                    Ver el Men├║
+                                    Ver el Menú
                                 </Button>
                             </Link>
                         </div>

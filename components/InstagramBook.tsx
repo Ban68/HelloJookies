@@ -7,42 +7,42 @@ import { ChevronLeft, ChevronRight, Heart, MessageCircle, Instagram } from "luci
 const posts = [
     {
         image: "/images/kinder-bueno.jpg",
-        caption: "­ƒì¬ Kinder Bueno Cookie ÔÇö Rellena de crema Kinder y chunks de chocolate blanco real. La favorita de todos. ­ƒññ",
+        caption: "🍪 Kinder Bueno Cookie — Rellena de crema Kinder y chunks de chocolate blanco real. La favorita de todos. 🤤",
         likes: 287,
         comments: 34,
-        date: "Hace 2 d├¡as",
+        date: "Hace 2 días",
     },
     {
         image: "/images/red-velvet.jpg",
-        caption: "ÔØñ´©Å Red Velvet con cream cheese frosting. Cada mordida es puro terciopelo. Disponible en Santa Marta y Barranquilla ­ƒì½",
+        caption: "❤️ Red Velvet con cream cheese frosting. Cada mordida es puro terciopelo. Disponible en Santa Marta y Barranquilla 🌽",
         likes: 342,
         comments: 41,
-        date: "Hace 4 d├¡as",
+        date: "Hace 4 días",
     },
     {
         image: "/images/klim-brigadeiro.jpg",
-        caption: "­ƒçº­ƒçÀ Brigadeiro meets Cookie. Klim + chocolate + leche condensada = una locura que no te puedes perder.",
+        caption: "🇧🇷 Brigadeiro meets Cookie. Klim + chocolate + leche condensada = una locura que no te puedes perder.",
         likes: 198,
         comments: 22,
         date: "Hace 1 semana",
     },
     {
         image: "/images/plan-playa-box.jpg",
-        caption: "­ƒÅû´©Å Plan Playa Box ÔÇö La caja perfecta para compartir en el Rodadero. 6 galletas surtidas + bebida. ┬íP├¡dela ya!",
+        caption: "🏖️ Plan Playa Box — La caja perfecta para compartir en el Rodadero. 6 galletas surtidas + bebida. ¡Pídela ya!",
         likes: 415,
         comments: 56,
         date: "Hace 1 semana",
     },
     {
         image: "/images/kinder-bueno.jpg",
-        caption: "­ƒÆø Abiertos TODOS los d├¡as. Fit & Fat. Porque aqu├¡ no juzgamos, solo horneamos felicidad. ­ƒì¬­ƒñÄ",
+        caption: "💪 Abiertos TODOS los días. Fit & Fat. Porque aquí no juzgamos, solo horneamos felicidad. 🍪😄",
         likes: 523,
         comments: 67,
         date: "Hace 2 semanas",
     },
     {
         image: "/images/red-velvet.jpg",
-        caption: "­ƒÄé ┬┐Cumplea├▒os? ┬┐Aniversario? ┬┐Un martes random? Cualquier excusa es buena para una caja de Jookies. ­ƒÆî",
+        caption: "🎂 ¿Cumpleaños? ¿Aniversario? ¿Un martes random? Cualquier excusa es buena para una caja de Jookies. 💌",
         likes: 178,
         comments: 19,
         date: "Hace 2 semanas",
@@ -199,7 +199,7 @@ export function InstagramBook() {
 }
 
 /* ============================================================
-   Page Content renderer ÔÇö determines what to show per page index
+   Page Content renderer — determines what to show per page index
    ============================================================ */
 function PageContent({ pageIndex, posts: postList, onOpen }: { pageIndex: number; posts: typeof posts; onOpen?: () => void }) {
     // Cover
@@ -224,7 +224,7 @@ function CoverPage({ onOpen }: { onOpen?: () => void }) {
                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
             }} />
 
-            {/* Logo ÔÇö full, no cropping */}
+            {/* Logo — full, no cropping */}
             <div className="relative w-48 h-48 mb-6 rounded-full bg-white/90 shadow-xl backdrop-blur-sm overflow-hidden flex-shrink-0">
                 <Image
                     src="/images/logo.jpeg"
@@ -236,7 +236,7 @@ function CoverPage({ onOpen }: { onOpen?: () => void }) {
             </div>
 
             <p className="text-white/80 text-center text-sm font-medium mb-6">
-                Cookies & m├ís Cookies ­ƒñÄ­ƒì¬
+                Cookies & más Cookies 😄🍪
             </p>
 
             <div className="flex items-center gap-2 text-white/60 text-xs">
@@ -277,7 +277,7 @@ function PostPage({ post, pageNum, total }: { post: typeof posts[0]; pageNum: nu
                 </div>
                 <div className="flex-1 min-w-0">
                     <p className="font-bold text-xs text-jookies-text">jookiesbakery</p>
-                    <p className="text-[10px] text-jookies-text/40">Santa Marta ­ƒì¬</p>
+                    <p className="text-[10px] text-jookies-text/40">Santa Marta 🍪</p>
                 </div>
                 <span className="text-[10px] text-jookies-text/30 font-medium">{post.date}</span>
             </div>
@@ -338,10 +338,10 @@ function BackCoverPage() {
 
             <Instagram className="w-12 h-12 text-white/80 mb-4" />
             <h3 className="font-heading text-2xl font-black text-white text-center mb-2">
-                ┬┐Quieres ver m├ís?
+                ¿Quieres ver más?
             </h3>
             <p className="text-white/50 text-sm text-center mb-6">
-                S├¡guenos para nuevos sabores, promos y m├ís ­ƒì¬
+                Síguenos para nuevos sabores, promos y más 🍪
             </p>
             <a
                 href="https://www.instagram.com/jookiesbakery/"
@@ -352,7 +352,7 @@ function BackCoverPage() {
                 <Instagram className="w-4 h-4" />
                 @jookiesbakery
             </a>
-            <p className="text-white/20 text-xs mt-8">3,888 seguidores ÔÇó 107 publicaciones</p>
+            <p className="text-white/20 text-xs mt-8">3,888 seguidores • 107 publicaciones</p>
         </div>
     );
 }
